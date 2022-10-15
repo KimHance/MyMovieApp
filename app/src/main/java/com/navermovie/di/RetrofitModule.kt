@@ -98,7 +98,7 @@ class RetrofitModule {
     ): KoficMovieService = retrofit.create(KoficMovieService::class.java)
 
     companion object {
-        const val NAVER_BASE_URL = "https://openapi.naver.com/v1/search/movie.json"
+        const val NAVER_BASE_URL = "https://openapi.naver.com/v1/search/"
         const val KOFIC_BASE_URL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/"
     }
 }

@@ -9,7 +9,7 @@ class NaverAuthInterceptor : Interceptor {
         chain.proceed(
             chain.request().newBuilder().apply {
                 header("X-Naver-Client-Id", NAVER_ID_KEY)
-                header("X-Naver-Client-Secret", NAVER_SECRET_KEY)
+                addHeader("X-Naver-Client-Secret", NAVER_SECRET_KEY).build()
             }.build()
         )
 }
