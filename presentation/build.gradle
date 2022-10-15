@@ -68,4 +68,6 @@ dependencies {
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
+    // CarouselRecyclerview
+    implementation "com.github.sparrow007:carouselrecyclerview:$carouselr_version"
 }
