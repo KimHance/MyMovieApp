@@ -9,7 +9,20 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#0F1016">
+
+        <TextView
+            android:id="@+id/tv_daily_best"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/daily_best"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@id/rv_box_office"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
             android:id="@+id/rv_box_office"
@@ -17,7 +30,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_box_office_movie"/>
+            tools:listitem="@layout/item_box_office_movie" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

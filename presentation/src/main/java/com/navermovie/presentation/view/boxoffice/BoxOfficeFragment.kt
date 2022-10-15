@@ -29,9 +29,9 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
     private fun initRecyclerView() {
         binding.rvBoxOffice.apply {
             adapter = boxOfficeAdapter
-            set3DItem(true)
             setAlpha(true)
             setInfinite(true)
+            setIntervalRatio(0.4f)
         }
     }
 
