@@ -9,5 +9,6 @@ const val NAVER_ID_KEY = "99VXvJCtfXDqG8qIT6mo"
 const val NAVER_SECRET_KEY = "kBpFgVkDrP"
 
 fun getCurrentDate(): String {
-    return SimpleDateFormat("yyyyMMdd").format(System.currentTimeMillis()).toString()
+    return SimpleDateFormat("yyyyMMdd").format(System.currentTimeMillis() - 1000L * 60L * 60L * 24L)
+        .toString()
 }
