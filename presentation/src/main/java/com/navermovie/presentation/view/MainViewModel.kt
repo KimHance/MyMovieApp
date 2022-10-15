@@ -1,4 +1,4 @@
-package com.navermovie.presentation
+package com.navermovie.presentation.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +24,6 @@ class MainViewModel @Inject constructor(
     private val _movieList = MutableStateFlow<List<Movie>>(emptyList())
     val movieList = _movieList.asStateFlow()
 
-
     fun fetchMovieList() {
         viewModelScope.launch {
             val fetchedMovieDetailJob = async {
@@ -42,5 +41,4 @@ class MainViewModel @Inject constructor(
             }
         }
     }
-
 }
