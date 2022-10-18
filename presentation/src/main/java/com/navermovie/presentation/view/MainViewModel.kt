@@ -7,7 +7,6 @@ import com.navermovie.usecase.FetchMovieDetailUseCase
 import com.navermovie.usecase.FetchMoviePosterUseCase
 import com.navermovie.usecase.GetMovieListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,13 +25,13 @@ class MainViewModel @Inject constructor(
 
     fun fetchMovieList() {
         viewModelScope.launch {
-            val fetchedMovieDetailJob = async {
+            val fetchMovieDetailJob = async {
                 getMovieListUseCase()?.map {
                     fetchMovieDetailUseCase(it)
                 }
             }
-            val fetchMoviePosterJob = async(start = CoroutineStart.LAZY) {
-                fetchedMovieDetailJob.await()?.map {
+            val fetchMoviePosterJob = async {
+                fetchMovieDetailJob.await()?.map {
                     fetchMoviePosterUseCase(it)
                 }
             }

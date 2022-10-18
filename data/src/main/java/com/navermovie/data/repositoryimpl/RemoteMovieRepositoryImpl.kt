@@ -55,8 +55,8 @@ class RemoteMovieRepositoryImpl @Inject constructor(
             naverMovieDataSource.getMoviePoster(movie.title)
         }.mapCatching {
             movie.copy(
-                poster = it.items?.get(0)?.image,
-                rating = it.items?.get(0)?.userRating
+                poster = it.items?.first()?.image,
+                rating = it.items?.first()?.userRating
             )
         }.getOrThrow()
     }
