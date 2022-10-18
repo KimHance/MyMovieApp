@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.navermovie.entity.Movie
 import com.navermovie.presentation.R
 
-class BoxOfficeAdapter : ListAdapter<Movie, BoxOfficeViewHolder>(movieDiffUtil) {
+class BoxOfficeAdapter(
+    private val itemClickListener: (Movie) -> Unit
+) : ListAdapter<Movie, BoxOfficeViewHolder>(movieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoxOfficeViewHolder {
         return BoxOfficeViewHolder(
@@ -17,7 +19,8 @@ class BoxOfficeAdapter : ListAdapter<Movie, BoxOfficeViewHolder>(movieDiffUtil) 
                 R.layout.item_box_office_movie,
                 parent,
                 false
-            )
+            ),
+            itemClickListener
         )
     }
 

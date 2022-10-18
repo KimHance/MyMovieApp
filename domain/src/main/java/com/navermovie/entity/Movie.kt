@@ -1,5 +1,7 @@
 package com.navermovie.entity
 
+import java.io.Serializable
+
 data class Movie(
     val title: String = "",
     val rank: Int = 0,
@@ -13,4 +15,4 @@ data class Movie(
     val showTime: String? = "",
     val poster: String? = "",
     val rating: String? = ""
-)
+) : Serializable
