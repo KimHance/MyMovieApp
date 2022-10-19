@@ -20,7 +20,13 @@ class MainViewModel @Inject constructor(
     private val fetchMoviePosterUseCase: FetchMoviePosterUseCase
 ) : ViewModel() {
 
-    private val _movieList = MutableStateFlow<List<Movie>>(emptyList())
+    private val emptyMovieList = mutableListOf<Movie>().apply {
+        for (i in 1..10) {
+            add(Movie())
+        }
+    }.toList()
+
+    private val _movieList = MutableStateFlow(emptyMovieList)
     val movieList = _movieList.asStateFlow()
 
     private val _selectedMovie = MutableStateFlow<Movie>(Movie())

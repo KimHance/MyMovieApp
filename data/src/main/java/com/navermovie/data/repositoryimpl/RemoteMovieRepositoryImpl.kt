@@ -56,7 +56,8 @@ class RemoteMovieRepositoryImpl @Inject constructor(
         }.mapCatching {
             movie.copy(
                 poster = it.items?.first()?.image,
-                rating = it.items?.first()?.userRating
+                rating = it.items?.first()?.userRating,
+                isFetched = true
             )
         }.getOrThrow()
     }

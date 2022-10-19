@@ -1,4 +1,4 @@
-package com.navermovie.presentation.view.boxoffice
+package com.navermovie.presentation.view.boxoffice.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.navermovie.entity.Movie

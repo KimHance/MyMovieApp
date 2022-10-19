@@ -70,4 +70,6 @@ dependencies {
 
     // CarouselRecyclerview
     implementation "com.github.sparrow007:carouselrecyclerview:$carouselr_version"
+
+    implementation "com.facebook.shimmer:shimmer:0.5.0"
 }

@@ -14,5 +14,6 @@ data class Movie(
     val directors: List<String>? = emptyList(),
     val showTime: String? = "",
     val poster: String? = "",
-    val rating: String? = ""
+    val rating: String? = "",
+    val isFetched: Boolean = false
 ) : Serializable

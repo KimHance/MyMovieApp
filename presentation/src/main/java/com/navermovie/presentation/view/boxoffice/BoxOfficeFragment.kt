@@ -12,6 +12,7 @@ import com.navermovie.presentation.R
 import com.navermovie.presentation.base.BaseFragment
 import com.navermovie.presentation.databinding.FragmentBoxOfficeBinding
 import com.navermovie.presentation.view.MainViewModel
+import com.navermovie.presentation.view.boxoffice.adapter.BoxOfficeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +36,7 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
             adapter = boxOfficeAdapter
             setAlpha(true)
             setInfinite(true)
-            setIntervalRatio(0.4f)
+            setIntervalRatio(0.6f)
         }
     }
 
