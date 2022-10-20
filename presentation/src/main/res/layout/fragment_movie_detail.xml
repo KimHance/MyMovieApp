@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/tv_detail_year"
-            bindOpenDate="@{movie.openDate}"
+            bindDate="@{movie.openDate}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -83,27 +83,27 @@
             android:id="@+id/rv_detail_genre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/tv_detail_rating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/tv_detail_year"
-            app:layout_constraintTop_toBottomOf="@id/tv_detail_year"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_open_date"
             tools:listitem="@layout/item_detail_genre" />
 
         <TextView
             android:id="@+id/tv_detail_star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:text="@string/rating"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/rb_detail_rating"
-            app:layout_constraintStart_toStartOf="@id/rv_detail_genre" />
+            app:layout_constraintStart_toStartOf="@id/rv_detail_genre"
+            app:layout_constraintTop_toBottomOf="@id/rv_detail_genre" />
 
         <TextView
             android:id="@+id/textView"
@@ -126,11 +126,24 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:textColor="@color/white"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_detail_star"
             app:layout_constraintStart_toEndOf="@id/tv_detail_star"
             app:layout_constraintTop_toTopOf="@id/tv_detail_star"
             tools:text="4.8" />
+
+        <TextView
+            android:id="@+id/tv_detail_open_date"
+            bindOpenDate="@{movie.openDate}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/rv_detail_genre"
+            app:layout_constraintStart_toStartOf="@id/rv_detail_genre"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_year"
+            tools:text="6월 17일 개봉" />
 
         <RatingBar
             android:id="@+id/rb_detail_rating"

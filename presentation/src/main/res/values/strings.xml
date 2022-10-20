@@ -2,4 +2,5 @@
     <string name="app_name">MovieApp</string>
     <string name="daily_best">Daily Best</string>
     <string name="rating">Rating</string>
+    <string name="open_data_format">MM월 dd일 개봉</string>
 </resources>

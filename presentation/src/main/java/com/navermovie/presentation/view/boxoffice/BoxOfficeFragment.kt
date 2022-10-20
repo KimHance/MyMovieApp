@@ -1,6 +1,7 @@
 package com.navermovie.presentation.view.boxoffice
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -45,6 +46,7 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.movieList.collect { movieList ->
                     boxOfficeAdapter.submitList(movieList.toList())
+                    Log.d("영화", "collectMovieList: ${movieList}")
                 }
             }
         }
