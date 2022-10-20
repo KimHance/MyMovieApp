@@ -4,12 +4,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DecodeFormat
 
 @BindingAdapter("bindPoster")
 fun ImageView.bindPoster(uri: String?) {
     uri?.let {
-        Glide.with(this).load(it).format(DecodeFormat.PREFER_ARGB_8888).into(this)
+        Glide.with(this).load(it).override(com.bumptech.glide.request.target.Target.SIZE_ORIGINAL)
+            .into(this)
     }
 }
 

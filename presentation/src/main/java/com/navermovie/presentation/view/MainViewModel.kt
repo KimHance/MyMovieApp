@@ -29,9 +29,6 @@ class MainViewModel @Inject constructor(
     private val _movieList = MutableStateFlow(emptyMovieList)
     val movieList = _movieList.asStateFlow()
 
-    private val _selectedMovie = MutableStateFlow<Movie>(Movie())
-    val selectedMovie = _selectedMovie.asStateFlow()
-
     fun fetchMovieList() {
         viewModelScope.launch {
             val fetchMovieDetailJob = async {
@@ -47,12 +44,6 @@ class MainViewModel @Inject constructor(
             fetchMoviePosterJob.await()?.let { fetchedMovieList ->
                 _movieList.value = fetchedMovieList
             }
-        }
-    }
-
-    fun setSelectedMovie(movie: Movie) {
-        viewModelScope.launch {
-            _selectedMovie.value = movie
         }
     }
 }
