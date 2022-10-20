@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MovieApp</string>
     <string name="daily_best">Daily Best</string>
+    <string name="rating">Rating</string>
 </resources>

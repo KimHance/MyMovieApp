@@ -8,4 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="skeleton_background">#2B2D3C</color>
+    <color name="color_main">#0F1016</color>
+    <color name="detail_content">#17171B</color>
+    <color name="detail_gray">#888787</color>
+    <color name="detail_genre">#323547</color>
+    <color name="detail_rating">#F8C93C</color>
 </resources>
