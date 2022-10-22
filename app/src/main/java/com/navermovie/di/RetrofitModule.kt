@@ -2,6 +2,7 @@ package com.navermovie.di
 
 import com.navermovie.data.remote.service.KoficMovieService
 import com.navermovie.data.remote.service.NaverMovieService
+import com.navermovie.data.remote.service.YoutubeService
 import com.navermovie.utils.NaverAuthInterceptor
 import dagger.Module
 import dagger.Provides
@@ -20,21 +21,29 @@ class RetrofitModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
-    annotation class KoficRetrofit
-
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
     annotation class NaverRetrofit
 
     @Provides
     @Singleton
-    @KoficRetrofit
     fun provideKoficRetrofit(
-        @KoficRetrofit okHttpClient: OkHttpClient,
+        okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(KOFIC_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideYoutubeRetrofit(
+        okHttpClient: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(YOUTUBE_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
@@ -56,7 +65,6 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    @KoficRetrofit
     fun provideKoficHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -94,11 +102,18 @@ class RetrofitModule {
     @Provides
     @Singleton
     fun provideKoficMovieService(
-        @KoficRetrofit retrofit: Retrofit
+        retrofit: Retrofit
     ): KoficMovieService = retrofit.create(KoficMovieService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideYoutubeService(
+        retrofit: Retrofit
+    ): YoutubeService = retrofit.create(YoutubeService::class.java)
 
     companion object {
         const val NAVER_BASE_URL = "https://openapi.naver.com/v1/search/"
         const val KOFIC_BASE_URL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/"
+        const val YOUTUBE_BASE_URL = "https://www.googleapis.com/youtube/v3/"
     }
 }

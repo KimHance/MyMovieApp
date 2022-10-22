@@ -21,9 +21,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val emptyMovieList = mutableListOf<Movie>().apply {
-        for (i in 1..10) {
-            add(Movie())
-        }
+        repeat(10) { add(Movie()) }
     }.toList()
 
     private val _movieList = MutableStateFlow(emptyMovieList)
