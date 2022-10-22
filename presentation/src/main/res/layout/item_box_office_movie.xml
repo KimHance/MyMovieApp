@@ -16,19 +16,20 @@
         android:layout_height="wrap_content">
 
         <com.jackandphantom.carouselrecyclerview.view.ReflectionImageView
-            android:id="@+id/iv_movie_poster"
+            android:id="@+id/iv_item_movie_poster"
             bindPoster="@{movie.poster}"
             android:layout_width="120dp"
             android:layout_height="240dp"
             android:background="@color/cardview_shadow_start_color"
             android:contentDescription="@null"
             android:scaleType="fitXY"
+            android:transitionName="@string/transition_poster"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/tv_movie_title"
+            android:id="@+id/tv_item_movie_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"

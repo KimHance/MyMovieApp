@@ -23,8 +23,18 @@ class RetrofitModule {
     @Retention(AnnotationRetention.BINARY)
     annotation class NaverRetrofit
 
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class KoficRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class YoutubeRetrofit
+
+    // for Retrofit
     @Provides
     @Singleton
+    @KoficRetrofit
     fun provideKoficRetrofit(
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
@@ -38,6 +48,7 @@ class RetrofitModule {
 
     @Provides
     @Singleton
+    @YoutubeRetrofit
     fun provideYoutubeRetrofit(
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
@@ -63,9 +74,10 @@ class RetrofitModule {
             .build()
     }
 
+    // for httpClient
     @Provides
     @Singleton
-    fun provideKoficHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -93,6 +105,7 @@ class RetrofitModule {
         return GsonConverterFactory.create()
     }
 
+    // for Service
     @Provides
     @Singleton
     fun provideNaverMovieService(
@@ -102,13 +115,13 @@ class RetrofitModule {
     @Provides
     @Singleton
     fun provideKoficMovieService(
-        retrofit: Retrofit
+        @KoficRetrofit retrofit: Retrofit
     ): KoficMovieService = retrofit.create(KoficMovieService::class.java)
 
     @Provides
     @Singleton
     fun provideYoutubeService(
-        retrofit: Retrofit
+        @YoutubeRetrofit retrofit: Retrofit
     ): YoutubeService = retrofit.create(YoutubeService::class.java)
 
     companion object {

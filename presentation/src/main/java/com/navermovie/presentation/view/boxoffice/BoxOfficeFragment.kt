@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.navermovie.entity.Movie
 import com.navermovie.presentation.R
 import com.navermovie.presentation.base.BaseFragment
@@ -21,8 +22,8 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
 
     private val mainViewModel: MainViewModel by activityViewModels()
     private val boxOfficeAdapter: BoxOfficeAdapter by lazy {
-        BoxOfficeAdapter(itemClickListener = {
-            doOnclick(it)
+        BoxOfficeAdapter(itemClickListener = { movie, view ->
+            doOnclick(movie, view)
         })
     }
 
@@ -52,10 +53,14 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
         }
     }
 
-    private fun doOnclick(movie: Movie) {
+    private fun doOnclick(movie: Movie, view: View) {
+        val extras = FragmentNavigatorExtras(
+            view to getString(R.string.transition_poster)
+        )
         val action = BoxOfficeFragmentDirections.actionBoxOfficeFragmentToMovieDetailFragment(
             movie
         )
-        requireView().findNavController().navigate(action)
+        requireView().findNavController()
+            .navigate(action, extras)
     }
 }

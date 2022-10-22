@@ -2,6 +2,7 @@ package com.navermovie.data.repositoryimpl
 
 import com.navermovie.data.remote.datasource.KoficMovieDataSource
 import com.navermovie.data.remote.datasource.NaverMovieDataSource
+import com.navermovie.data.remote.datasource.YoutubeDataSource
 import com.navermovie.data.remote.response.toActorString
 import com.navermovie.data.remote.response.toAuditString
 import com.navermovie.data.remote.response.toDirectorString
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class RemoteMovieRepositoryImpl @Inject constructor(
     private val koficMovieDataSource: KoficMovieDataSource,
     private val naverMovieDataSource: NaverMovieDataSource,
+    private val youtubeDataSource: YoutubeDataSource,
     @DispatcherModule.DispatcherIO private val dispatcherIO: CoroutineDispatcher
 ) : RemoteMovieRepository {
 
@@ -59,6 +61,14 @@ class RemoteMovieRepositoryImpl @Inject constructor(
                 rating = it.items?.first()?.userRating,
                 isFetched = true
             )
+        }.getOrThrow()
+    }
+
+    override suspend fun getMovieTeaser(query: String): String? {
+        return runCatching {
+            youtubeDataSource.getMovieTeaserLink(query)
+        }.mapCatching {
+            it.items?.first()?.id?.videoId
         }.getOrThrow()
     }
 }

@@ -17,7 +17,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val getMovieListUseCase: GetMovieListUseCase,
     private val fetchMovieDetailUseCase: FetchMovieDetailUseCase,
-    private val fetchMoviePosterUseCase: FetchMoviePosterUseCase
+    private val fetchMoviePosterUseCase: FetchMoviePosterUseCase,
 ) : ViewModel() {
 
     private val emptyMovieList = mutableListOf<Movie>().apply {
@@ -27,6 +27,8 @@ class MainViewModel @Inject constructor(
     private val _movieList = MutableStateFlow(emptyMovieList)
     val movieList = _movieList.asStateFlow()
 
+
+    // flatMap
     fun fetchMovieList() {
         viewModelScope.launch {
             val fetchMovieDetailJob = async {

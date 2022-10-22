@@ -2,8 +2,10 @@ package com.navermovie.di
 
 import com.navermovie.data.remote.datasource.KoficMovieDataSource
 import com.navermovie.data.remote.datasource.NaverMovieDataSource
+import com.navermovie.data.remote.datasource.YoutubeDataSource
 import com.navermovie.data.remote.datasource.impl.KoficMovieDataSourceImpl
 import com.navermovie.data.remote.datasource.impl.NaverMovieDataSourceImpl
+import com.navermovie.data.remote.datasource.impl.YoutubeDataSourceImpl
 import com.navermovie.data.repositoryimpl.LocalMovieRepositoryImpl
 import com.navermovie.data.repositoryimpl.RemoteMovieRepositoryImpl
 import com.navermovie.repository.LocalMovieRepository
@@ -29,6 +31,12 @@ abstract class DataModule {
     abstract fun bindNaverDataSource(
         impl: NaverMovieDataSourceImpl
     ): NaverMovieDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindYoutubeDataSource(
+        impl: YoutubeDataSourceImpl
+    ): YoutubeDataSource
 
     @Binds
     @Singleton

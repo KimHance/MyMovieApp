@@ -8,4 +8,6 @@ interface RemoteMovieRepository {
     suspend fun fetchMovieDetail(movie: Movie): Movie
 
     suspend fun fetchMoviePoster(movie: Movie): Movie
+
+    suspend fun getMovieTeaser(query: String): String?
 }

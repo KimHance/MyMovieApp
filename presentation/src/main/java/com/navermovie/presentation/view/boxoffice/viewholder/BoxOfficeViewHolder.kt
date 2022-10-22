@@ -1,12 +1,13 @@
 package com.navermovie.presentation.view.boxoffice.viewholder
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.navermovie.entity.Movie
 import com.navermovie.presentation.databinding.ItemBoxOfficeMovieBinding
 
 class BoxOfficeViewHolder(
     private val binding: ItemBoxOfficeMovieBinding,
-    private val itemClickListener: (Movie) -> Unit
+    private val itemClickListener: (Movie, View) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Movie) {
@@ -14,7 +15,7 @@ class BoxOfficeViewHolder(
             movie = item
             executePendingBindings()
             itemView.setOnClickListener {
-                itemClickListener(item)
+                itemClickListener(item, ivItemMoviePoster)
             }
         }
     }

@@ -4,4 +4,5 @@
     <string name="rating">Rating</string>
     <string name="open_data_format">MM월 dd일 개봉</string>
     <string name="watch_teaser">Watch Teaser</string>
+    <string name="transition_poster">movie_poster</string>
 </resources>

@@ -37,8 +37,8 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/iv_movie_detail"
-            app:layout_constraintTop_toTopOf="@id/iv_movie_detail"
+            app:layout_constraintStart_toEndOf="@id/iv_detail_movie"
+            app:layout_constraintTop_toTopOf="@id/iv_detail_movie"
             tools:text="2021" />
 
         <TextView
@@ -56,19 +56,20 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/iv_movie_detail"
+            app:layout_constraintStart_toStartOf="@id/iv_detail_movie"
             app:layout_constraintTop_toBottomOf="@+id/iv_detail_back"
             tools:text="영화 제목" />
 
 
         <ImageView
-            android:id="@+id/iv_movie_detail"
+            android:id="@+id/iv_detail_movie"
             bindPoster="@{movie.poster}"
             android:layout_width="170dp"
             android:layout_height="220dp"
             android:layout_marginTop="25dp"
             android:contentDescription="@null"
             android:scaleType="fitXY"
+            android:transitionName="@string/transition_poster"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
             tools:src="@tools:sample/avatars" />
@@ -163,7 +164,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
             android:backgroundTint="#424662"
-            app:layout_constraintBottom_toBottomOf="@id/iv_movie_detail"
+            app:layout_constraintBottom_toBottomOf="@id/iv_detail_movie"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_detail_year">
 

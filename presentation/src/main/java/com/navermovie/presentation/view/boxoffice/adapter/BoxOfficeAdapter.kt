@@ -1,6 +1,7 @@
 package com.navermovie.presentation.view.boxoffice.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -15,7 +16,7 @@ const val UN_FETCHED = 0
 const val FETCHED = 1
 
 class BoxOfficeAdapter(
-    private val itemClickListener: (Movie) -> Unit
+    private val itemClickListener: (Movie, View) -> Unit
 ) : ListAdapter<Movie, RecyclerView.ViewHolder>(movieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
