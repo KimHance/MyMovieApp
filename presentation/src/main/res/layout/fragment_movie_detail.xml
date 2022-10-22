@@ -37,8 +37,8 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/cv_detail_poster"
-            app:layout_constraintTop_toTopOf="@id/cv_detail_poster"
+            app:layout_constraintStart_toEndOf="@id/iv_movie_detail"
+            app:layout_constraintTop_toTopOf="@id/iv_movie_detail"
             tools:text="2021" />
 
         <TextView
@@ -56,28 +56,23 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/cv_detail_poster"
+            app:layout_constraintStart_toStartOf="@id/iv_movie_detail"
             app:layout_constraintTop_toBottomOf="@+id/iv_detail_back"
             tools:text="영화 제목" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_detail_poster"
+
+        <ImageView
+            android:id="@+id/iv_movie_detail"
+            bindPoster="@{movie.poster}"
             android:layout_width="170dp"
             android:layout_height="220dp"
             android:layout_marginTop="25dp"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_detail_title">
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
+            tools:src="@tools:sample/avatars" />
 
-            <ImageView
-                android:id="@+id/iv_movie_detail"
-                bindPoster="@{movie.poster}"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@null"
-                android:scaleType="fitXY"
-                tools:src="@tools:sample/avatars" />
-
-        </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_detail_genre"
@@ -86,24 +81,12 @@
             android:layout_marginEnd="40dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/tv_detail_rating"
+            app:layout_constraintBottom_toTopOf="@id/cv_detail_rating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/tv_detail_year"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_open_date"
             tools:listitem="@layout/item_detail_genre" />
-
-        <TextView
-            android:id="@+id/tv_detail_star"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rating"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/rb_detail_rating"
-            app:layout_constraintStart_toStartOf="@id/rv_detail_genre"
-            app:layout_constraintTop_toBottomOf="@id/rv_detail_genre" />
 
         <TextView
             android:id="@+id/textView"
@@ -120,19 +103,6 @@
             tools:text="2h 5m" />
 
         <TextView
-            android:id="@+id/tv_detail_rating"
-            bindRating="@{movie.rating}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_detail_star"
-            app:layout_constraintStart_toEndOf="@id/tv_detail_star"
-            app:layout_constraintTop_toTopOf="@id/tv_detail_star"
-            tools:text="4.8" />
-
-        <TextView
             android:id="@+id/tv_detail_open_date"
             bindOpenDate="@{movie.openDate}"
             android:layout_width="wrap_content"
@@ -145,20 +115,89 @@
             app:layout_constraintTop_toBottomOf="@id/tv_detail_year"
             tools:text="6월 17일 개봉" />
 
-        <RatingBar
-            android:id="@+id/rb_detail_rating"
-            style="@style/Widget.AppCompat.RatingBar.Indicator"
-            bindRating="@{movie.rating}"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_detail_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/skeleton_background"
+            app:cardCornerRadius="7dp"
+            app:layout_constraintBottom_toTopOf="@id/cv_detail_teaser"
+            app:layout_constraintStart_toStartOf="@id/tv_detail_year"
+            app:layout_constraintTop_toBottomOf="@id/rv_detail_genre">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp">
+
+                <ImageView
+                    android:id="@+id/iv_detail_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_star"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_s"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@{movie.rating}"
+                    android:textColor="@color/color_main"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_detail_star"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="7.8" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_detail_teaser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:progressBackgroundTint="@color/detail_gray"
-            android:progressTint="@color/detail_rating"
-            app:layout_constraintBottom_toBottomOf="@id/cv_detail_poster"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="#424662"
+            app:layout_constraintBottom_toBottomOf="@id/iv_movie_detail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/tv_detail_star" />
+            app:layout_constraintStart_toStartOf="@id/tv_detail_year">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingVertical="3dp">
+
+                <ImageView
+                    android:id="@+id/iv_detail_teaser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_play"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_play_teaser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/watch_teaser"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_detail_teaser"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

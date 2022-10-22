@@ -20,12 +20,6 @@ fun TextView.bindShowTime(time: String) {
 }
 
 @BindingAdapter("bindRating")
-fun TextView.bindRating(rating: String) {
-    val rate = rating.toFloat() / 2
-    setText(String.format("%.1f", rate))
-}
-
-@BindingAdapter("bindRating")
 fun RatingBar.bindRating(rating: String) {
     val rate = rating.toFloat() / 2
     this.rating = rate
