@@ -13,4 +13,5 @@
     <color name="detail_gray">#888787</color>
     <color name="detail_genre">#464A63</color>
     <color name="detail_rating">#F8C93C</color>
+    <color name="color_detail_content">#10121B</color>
 </resources>

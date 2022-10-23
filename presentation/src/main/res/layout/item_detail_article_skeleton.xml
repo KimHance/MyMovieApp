@@ -7,12 +7,11 @@
     </data>
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:layout_width="100dp"
-        android:layout_height="140dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/bg_item_skeleton"
         app:shimmer_base_alpha="0.8">
 
     </com.facebook.shimmer.ShimmerFrameLayout>
-
-
 </layout>

@@ -5,4 +5,8 @@
     <string name="open_data_format">MM월 dd일 개봉</string>
     <string name="watch_teaser">Watch Teaser</string>
     <string name="transition_poster">movie_poster</string>
+    <string name="story">줄거리</string>
+    <string name="actors">출연 배우</string>
+    <string name="directors">감독</string>
+    <string name="article">관련 기사</string>
 </resources>
