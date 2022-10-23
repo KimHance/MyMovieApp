@@ -3,6 +3,7 @@ package com.navermovie.di
 import com.navermovie.data.remote.service.KoficMovieService
 import com.navermovie.data.remote.service.NaverMovieService
 import com.navermovie.data.remote.service.YoutubeService
+import com.navermovie.utils.KakaoAuthInterceptor
 import com.navermovie.utils.NaverAuthInterceptor
 import dagger.Module
 import dagger.Provides
@@ -30,6 +31,10 @@ class RetrofitModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class YoutubeRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class KakaoRetrofit
 
     // for Retrofit
     @Provides
@@ -74,6 +79,20 @@ class RetrofitModule {
             .build()
     }
 
+    @Provides
+    @Singleton
+    @KakaoRetrofit
+    fun provideKakaoRetrofit(
+        @KakaoRetrofit okHttpClient: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(KAKAO_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+    }
+
     // for httpClient
     @Provides
     @Singleton
@@ -96,6 +115,19 @@ class RetrofitModule {
         return OkHttpClient.Builder()
             .addNetworkInterceptor(loggingInterceptor)
             .addInterceptor(NaverAuthInterceptor())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @KakaoRetrofit
+    fun provideKakaoHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        return OkHttpClient.Builder()
+            .addNetworkInterceptor(loggingInterceptor)
+            .addInterceptor(KakaoAuthInterceptor())
             .build()
     }
 
@@ -128,5 +160,6 @@ class RetrofitModule {
         const val NAVER_BASE_URL = "https://openapi.naver.com/v1/search/"
         const val KOFIC_BASE_URL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/"
         const val YOUTUBE_BASE_URL = "https://www.googleapis.com/youtube/v3/"
+        const val KAKAO_BASE_URL = "https://dapi.kakao.com/"
     }
 }

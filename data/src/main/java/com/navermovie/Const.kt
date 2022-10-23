@@ -10,6 +10,8 @@ const val NAVER_SECRET_KEY = "kBpFgVkDrP"
 
 const val YOUTUBE_KEY = "AIzaSyA9NVWdrIuRxh4NFvZM3TIyVmbv8RI1PpM"
 
+const val KAKAO_KEY = "0aa27526a3b1f6056b36ea08b23446c3"
+
 fun getCurrentDate(): String {
     return SimpleDateFormat("yyyyMMdd").format(System.currentTimeMillis() - 1000L * 60L * 60L * 24L)
         .toString()

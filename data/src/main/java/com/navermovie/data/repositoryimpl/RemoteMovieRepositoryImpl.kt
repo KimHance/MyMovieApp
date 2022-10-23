@@ -1,5 +1,6 @@
 package com.navermovie.data.repositoryimpl
 
+import com.navermovie.data.remote.datasource.KakaoSearchDataSource
 import com.navermovie.data.remote.datasource.KoficMovieDataSource
 import com.navermovie.data.remote.datasource.NaverMovieDataSource
 import com.navermovie.data.remote.datasource.YoutubeDataSource
@@ -17,6 +18,7 @@ class RemoteMovieRepositoryImpl @Inject constructor(
     private val koficMovieDataSource: KoficMovieDataSource,
     private val naverMovieDataSource: NaverMovieDataSource,
     private val youtubeDataSource: YoutubeDataSource,
+    private val kakaoSearchDataSource: KakaoSearchDataSource,
     @DispatcherModule.DispatcherIO private val dispatcherIO: CoroutineDispatcher
 ) : RemoteMovieRepository {
 
@@ -69,6 +71,15 @@ class RemoteMovieRepositoryImpl @Inject constructor(
             youtubeDataSource.getMovieTeaserLink(query)
         }.mapCatching {
             it.items?.first()?.id?.videoId
+        }.getOrThrow()
+    }
+
+    override suspend fun getImageUrl(title: String, actor: String): String? {
+        return runCatching {
+            val query = "$title $actor"
+            kakaoSearchDataSource.getImage(query)
+        }.mapCatching {
+            it.documents?.first()?.imageUrl
         }.getOrThrow()
     }
 }

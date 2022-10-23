@@ -10,4 +10,6 @@ interface RemoteMovieRepository {
     suspend fun fetchMoviePoster(movie: Movie): Movie
 
     suspend fun getMovieTeaser(query: String): String?
+
+    suspend fun getImageUrl(title: String, actor: String): String?
 }
