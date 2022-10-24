@@ -2,11 +2,11 @@ package com.navermovie.di
 
 import com.navermovie.data.remote.datasource.KakaoSearchDataSource
 import com.navermovie.data.remote.datasource.KoficMovieDataSource
-import com.navermovie.data.remote.datasource.NaverMovieDataSource
+import com.navermovie.data.remote.datasource.NaverSearchDataSource
 import com.navermovie.data.remote.datasource.YoutubeDataSource
 import com.navermovie.data.remote.datasource.impl.KakaoSearchDataSourceImpl
 import com.navermovie.data.remote.datasource.impl.KoficMovieDataSourceImpl
-import com.navermovie.data.remote.datasource.impl.NaverMovieDataSourceImpl
+import com.navermovie.data.remote.datasource.impl.NaverSearchDataSourceImpl
 import com.navermovie.data.remote.datasource.impl.YoutubeDataSourceImpl
 import com.navermovie.data.repositoryimpl.LocalMovieRepositoryImpl
 import com.navermovie.data.repositoryimpl.RemoteMovieRepositoryImpl
@@ -31,8 +31,8 @@ abstract class DataModule {
     @Binds
     @Singleton
     abstract fun bindNaverDataSource(
-        impl: NaverMovieDataSourceImpl
-    ): NaverMovieDataSource
+        impl: NaverSearchDataSourceImpl
+    ): NaverSearchDataSource
 
     @Binds
     @Singleton

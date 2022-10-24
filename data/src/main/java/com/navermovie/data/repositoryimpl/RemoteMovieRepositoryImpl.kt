@@ -2,25 +2,23 @@ package com.navermovie.data.repositoryimpl
 
 import com.navermovie.data.remote.datasource.KakaoSearchDataSource
 import com.navermovie.data.remote.datasource.KoficMovieDataSource
-import com.navermovie.data.remote.datasource.NaverMovieDataSource
+import com.navermovie.data.remote.datasource.NaverSearchDataSource
 import com.navermovie.data.remote.datasource.YoutubeDataSource
 import com.navermovie.data.remote.response.toActorString
 import com.navermovie.data.remote.response.toAuditString
 import com.navermovie.data.remote.response.toDirectorString
 import com.navermovie.data.remote.response.toGenreString
-import com.navermovie.di.DispatcherModule
 import com.navermovie.entity.Actor
+import com.navermovie.entity.Article
 import com.navermovie.entity.Movie
 import com.navermovie.repository.RemoteMovieRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 class RemoteMovieRepositoryImpl @Inject constructor(
     private val koficMovieDataSource: KoficMovieDataSource,
-    private val naverMovieDataSource: NaverMovieDataSource,
+    private val naverSearchDataSource: NaverSearchDataSource,
     private val youtubeDataSource: YoutubeDataSource,
     private val kakaoSearchDataSource: KakaoSearchDataSource,
-    @DispatcherModule.DispatcherIO private val dispatcherIO: CoroutineDispatcher
 ) : RemoteMovieRepository {
 
     override suspend fun getMovieList(): List<Movie>? {
@@ -57,7 +55,7 @@ class RemoteMovieRepositoryImpl @Inject constructor(
 
     override suspend fun fetchMoviePoster(movie: Movie): Movie {
         return runCatching {
-            naverMovieDataSource.getMoviePoster(movie.title)
+            naverSearchDataSource.getMoviePoster(movie.title)
         }.mapCatching {
             movie.copy(
                 poster = it.items?.first()?.image,
@@ -87,5 +85,20 @@ class RemoteMovieRepositoryImpl @Inject constructor(
                 Actor(actor, isFetched = true)
             )
         }
+    }
+
+    override suspend fun getMovieArticle(movie: Movie): List<Article>? {
+        return runCatching {
+            naverSearchDataSource.getMovieArticle(movie.title)
+        }.mapCatching { response ->
+            response.items?.map { item ->
+                Article(
+                    link = item?.originallink,
+                    title = item?.title,
+                    description = item?.description,
+                    isFetched = true
+                )
+            }
+        }.getOrNull()
     }
 }

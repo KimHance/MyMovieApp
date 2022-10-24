@@ -2,7 +2,7 @@ package com.navermovie.di
 
 import com.navermovie.data.remote.service.KakaoSearchService
 import com.navermovie.data.remote.service.KoficMovieService
-import com.navermovie.data.remote.service.NaverMovieService
+import com.navermovie.data.remote.service.NaverSearchService
 import com.navermovie.data.remote.service.YoutubeService
 import com.navermovie.utils.KakaoAuthInterceptor
 import com.navermovie.utils.NaverAuthInterceptor
@@ -141,9 +141,9 @@ class RetrofitModule {
     // for Service
     @Provides
     @Singleton
-    fun provideNaverMovieService(
+    fun provideNaverSearchService(
         @NaverRetrofit retrofit: Retrofit
-    ): NaverMovieService = retrofit.create(NaverMovieService::class.java)
+    ): NaverSearchService = retrofit.create(NaverSearchService::class.java)
 
     @Provides
     @Singleton

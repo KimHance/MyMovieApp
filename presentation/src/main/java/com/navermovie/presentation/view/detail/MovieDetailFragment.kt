@@ -11,12 +11,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.navermovie.entity.Article
+import com.navermovie.presentation.CHROME
 import com.navermovie.presentation.R
 import com.navermovie.presentation.YOUTUBE
 import com.navermovie.presentation.YOUTUBE_WATCH_LINK
 import com.navermovie.presentation.base.BaseFragment
 import com.navermovie.presentation.databinding.FragmentMovieDetailBinding
 import com.navermovie.presentation.view.detail.adapter.DetailActorAdapter
+import com.navermovie.presentation.view.detail.adapter.DetailArticleAdapter
 import com.navermovie.presentation.view.detail.adapter.DetailGenreAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -31,6 +34,9 @@ class MovieDetailFragment :
     }
     private val actorAdapter: DetailActorAdapter by lazy {
         DetailActorAdapter()
+    }
+    private val articleAdapter: DetailArticleAdapter by lazy {
+        DetailArticleAdapter(itemClickListener = { doOnClick(it) })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +65,7 @@ class MovieDetailFragment :
                 detailViewModel.setYoutubeVideoId("${movie?.title} 티저")
             }
             rvDetailActors.adapter = actorAdapter
+            rvDetailArticle.adapter = articleAdapter
         }
     }
 
@@ -79,6 +86,11 @@ class MovieDetailFragment :
                         actorAdapter.submitList(actorList?.toList())
                     }
                 }
+                launch {
+                    detailViewModel.articleList.collect { articleList ->
+                        articleAdapter.submitList(articleList?.toList())
+                    }
+                }
             }
         }
     }
@@ -86,5 +98,14 @@ class MovieDetailFragment :
     private fun initSelectedMovie() {
         binding.movie = navArgs.movie
         detailViewModel.getActorImageList(navArgs.movie)
+        detailViewModel.getMovieArticle(navArgs.movie)
+    }
+
+    private fun doOnClick(item: Article) {
+        requireActivity().startActivity(
+            Intent(Intent.ACTION_VIEW)
+                .setData(Uri.parse(item.link))
+                .setPackage(CHROME)
+        )
     }
 }

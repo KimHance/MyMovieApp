@@ -6,31 +6,34 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.navermovie.entity.Actor
+import com.navermovie.entity.Article
 import com.navermovie.presentation.R
 import com.navermovie.presentation.view.boxoffice.adapter.FETCHED
 import com.navermovie.presentation.view.boxoffice.adapter.UN_FETCHED
-import com.navermovie.presentation.view.detail.viewholder.ActorSkeletonViewHolder
-import com.navermovie.presentation.view.detail.viewholder.ActorViewHolder
+import com.navermovie.presentation.view.detail.viewholder.ArticleSkeletonVieHolder
+import com.navermovie.presentation.view.detail.viewholder.ArticleViewHolder
 
-class DetailActorAdapter : ListAdapter<Actor, RecyclerView.ViewHolder>(actorDiffUtil) {
+class DetailArticleAdapter(
+    private val itemClickListener: (Article) -> Unit
+) : ListAdapter<Article, RecyclerView.ViewHolder>(articleDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             FETCHED -> {
-                ActorViewHolder(
+                ArticleViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_detail_actor,
+                        R.layout.item_detail_article,
                         parent,
                         false
-                    )
+                    ),
+                    itemClickListener
                 )
             }
             else -> {
-                ActorSkeletonViewHolder(
+                ArticleSkeletonVieHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_detail_actor_skeleton,
+                        R.layout.item_detail_article_skeleton,
                         parent,
                         false
                     )
@@ -51,20 +54,20 @@ class DetailActorAdapter : ListAdapter<Actor, RecyclerView.ViewHolder>(actorDiff
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItem(position).isFetched) {
             true -> {
-                (holder as ActorViewHolder).bind(getItem(position))
+                (holder as ArticleViewHolder).bind(getItem(position))
             }
             false -> {
-                (holder as ActorSkeletonViewHolder).bind()
+                (holder as ArticleSkeletonVieHolder).bind()
             }
         }
     }
 
     companion object {
-        val actorDiffUtil = object : DiffUtil.ItemCallback<Actor>() {
-            override fun areItemsTheSame(oldItem: Actor, newItem: Actor): Boolean =
-                oldItem.name == newItem.name
+        val articleDiffUtil = object : DiffUtil.ItemCallback<Article>() {
+            override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean =
+                oldItem.link == newItem.link
 
-            override fun areContentsTheSame(oldItem: Actor, newItem: Actor): Boolean =
+            override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean =
                 oldItem == newItem
 
         }

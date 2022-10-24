@@ -3,6 +3,7 @@ package com.navermovie.presentation.view.detail.adapter
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.navermovie.presentation.R
@@ -52,4 +53,11 @@ fun TextView.bindDirector(directorList: List<String>?) {
         }
     }
     text = tmpDirectorText
+}
+
+@BindingAdapter("bindHtml")
+fun TextView.bindHtml(html: String?) {
+    html?.let {
+        text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
+    }
 }
