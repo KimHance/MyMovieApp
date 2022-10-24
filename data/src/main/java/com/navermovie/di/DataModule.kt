@@ -1,5 +1,7 @@
 package com.navermovie.di
 
+import com.navermovie.data.local.datasource.CachedDataSource
+import com.navermovie.data.local.datasource.impl.CachedDataSourceImpl
 import com.navermovie.data.remote.datasource.KakaoSearchDataSource
 import com.navermovie.data.remote.datasource.KoficMovieDataSource
 import com.navermovie.data.remote.datasource.NaverSearchDataSource
@@ -45,6 +47,12 @@ abstract class DataModule {
     abstract fun bindKakaoDatSource(
         impl: KakaoSearchDataSourceImpl
     ): KakaoSearchDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindCachedDataSource(
+        impl: CachedDataSourceImpl
+    ): CachedDataSource
 
     @Binds
     @Singleton
