@@ -11,6 +11,6 @@ data class KakaoImageResponse(
 ) {
     @Serializable
     data class Document(
-        val imageUrl: String?, // http://img.insight.co.kr/static/2017/07/10/300/5bu7p43u87xi7z8j627v.jpg
+        val image_url: String?, // http://img.insight.co.kr/static/2017/07/10/300/5bu7p43u87xi7z8j627v.jpg
     )
 }

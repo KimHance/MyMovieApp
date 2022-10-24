@@ -19,7 +19,7 @@ class KakaoAuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain) =
         chain.proceed(
             chain.request().newBuilder().apply {
-                header("Authorization: KakaoAK ", KAKAO_KEY).build()
+                header("Authorization", "KakaoAK $KAKAO_KEY").build()
             }.build()
         )
 }

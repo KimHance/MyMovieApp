@@ -16,6 +16,7 @@ import com.navermovie.presentation.YOUTUBE
 import com.navermovie.presentation.YOUTUBE_WATCH_LINK
 import com.navermovie.presentation.base.BaseFragment
 import com.navermovie.presentation.databinding.FragmentMovieDetailBinding
+import com.navermovie.presentation.view.detail.adapter.DetailActorAdapter
 import com.navermovie.presentation.view.detail.adapter.DetailGenreAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,6 +28,9 @@ class MovieDetailFragment :
     private val navArgs: MovieDetailFragmentArgs by navArgs()
     private val genreAdapter: DetailGenreAdapter by lazy {
         DetailGenreAdapter()
+    }
+    private val actorAdapter: DetailActorAdapter by lazy {
+        DetailActorAdapter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,18 +58,26 @@ class MovieDetailFragment :
             cvDetailTeaser.setOnClickListener {
                 detailViewModel.setYoutubeVideoId("${movie?.title} 티저")
             }
+            rvDetailActors.adapter = actorAdapter
         }
     }
 
     private fun collectFlow() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                detailViewModel.selectedMovieLinkId.collect { id ->
-                    requireActivity().startActivity(
-                        Intent(Intent.ACTION_VIEW)
-                            .setData(Uri.parse(YOUTUBE_WATCH_LINK + id))
-                            .setPackage(YOUTUBE)
-                    )
+                launch {
+                    detailViewModel.selectedMovieLinkId.collect { id ->
+                        requireActivity().startActivity(
+                            Intent(Intent.ACTION_VIEW)
+                                .setData(Uri.parse(YOUTUBE_WATCH_LINK + id))
+                                .setPackage(YOUTUBE)
+                        )
+                    }
+                }
+                launch {
+                    detailViewModel.actorList.collect { actorList ->
+                        actorAdapter.submitList(actorList?.toList())
+                    }
                 }
             }
         }
@@ -73,5 +85,6 @@ class MovieDetailFragment :
 
     private fun initSelectedMovie() {
         binding.movie = navArgs.movie
+        detailViewModel.getActorImageList(navArgs.movie)
     }
 }

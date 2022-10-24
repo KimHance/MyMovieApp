@@ -1,8 +1,10 @@
 package com.navermovie.presentation.view.detail.adapter
 
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.navermovie.presentation.R
 import java.text.SimpleDateFormat
 
@@ -30,4 +32,24 @@ fun TextView.bindOpenDate(date: String) {
     val dateFormatter = SimpleDateFormat("yyyyMMdd")
     val date = dateFormatter.parse(date)
     text = SimpleDateFormat(context.getString(R.string.open_data_format)).format(date)
+}
+
+@BindingAdapter("bindImage")
+fun ImageView.bindImage(imageUrl: String?) {
+    imageUrl?.let {
+        if (imageUrl.isNotBlank()) {
+            Glide.with(this).load(imageUrl).into(this)
+        }
+    }
+}
+
+@BindingAdapter("bindDirector")
+fun TextView.bindDirector(directorList: List<String>?) {
+    var tmpDirectorText = ""
+    directorList?.let { list ->
+        for (director in list) {
+            tmpDirectorText += "($director) "
+        }
+    }
+    text = tmpDirectorText
 }

@@ -1,5 +1,6 @@
 package com.navermovie.di
 
+import com.navermovie.data.remote.service.KakaoSearchService
 import com.navermovie.data.remote.service.KoficMovieService
 import com.navermovie.data.remote.service.NaverMovieService
 import com.navermovie.data.remote.service.YoutubeService
@@ -155,6 +156,12 @@ class RetrofitModule {
     fun provideYoutubeService(
         @YoutubeRetrofit retrofit: Retrofit
     ): YoutubeService = retrofit.create(YoutubeService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideKakaoService(
+        @KakaoRetrofit retrofit: Retrofit
+    ): KakaoSearchService = retrofit.create(KakaoSearchService::class.java)
 
     companion object {
         const val NAVER_BASE_URL = "https://openapi.naver.com/v1/search/"

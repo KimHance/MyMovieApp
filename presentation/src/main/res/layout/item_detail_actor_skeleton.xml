@@ -9,6 +9,7 @@
     <com.facebook.shimmer.ShimmerFrameLayout
         android:layout_width="100dp"
         android:layout_height="140dp"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/bg_item_skeleton"
         app:shimmer_base_alpha="0.8">
 

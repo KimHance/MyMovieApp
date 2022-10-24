@@ -1,10 +1,11 @@
 package com.navermovie.usecase
 
+import com.navermovie.entity.Movie
 import com.navermovie.repository.RemoteMovieRepository
 import javax.inject.Inject
 
 class GetActorImageUseCase @Inject constructor(
     private val repository: RemoteMovieRepository
 ) {
-    suspend operator fun invoke(title: String, actor: String) = repository.getImageUrl(title, actor)
+    suspend operator fun invoke(movie: Movie) = repository.getImageUrl(movie)
 }

@@ -9,6 +9,7 @@ import com.navermovie.data.remote.response.toAuditString
 import com.navermovie.data.remote.response.toDirectorString
 import com.navermovie.data.remote.response.toGenreString
 import com.navermovie.di.DispatcherModule
+import com.navermovie.entity.Actor
 import com.navermovie.entity.Movie
 import com.navermovie.repository.RemoteMovieRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -74,12 +75,17 @@ class RemoteMovieRepositoryImpl @Inject constructor(
         }.getOrThrow()
     }
 
-    override suspend fun getImageUrl(title: String, actor: String): String? {
-        return runCatching {
+    override suspend fun getImageUrl(movie: Movie): List<Actor>? {
+        val title = movie.title
+        return movie.actors?.map { actor ->
             val query = "$title $actor"
-            kakaoSearchDataSource.getImage(query)
-        }.mapCatching {
-            it.documents?.first()?.imageUrl
-        }.getOrThrow()
+            runCatching {
+                kakaoSearchDataSource.getImage(query)
+            }.mapCatching { response ->
+                Actor(actor, response.documents?.first()?.image_url, true)
+            }.getOrDefault(
+                Actor(actor, isFetched = true)
+            )
+        }
     }
 }

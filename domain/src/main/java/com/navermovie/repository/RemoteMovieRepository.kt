@@ -1,5 +1,6 @@
 package com.navermovie.repository
 
+import com.navermovie.entity.Actor
 import com.navermovie.entity.Movie
 
 interface RemoteMovieRepository {
@@ -11,5 +12,5 @@ interface RemoteMovieRepository {
 
     suspend fun getMovieTeaser(query: String): String?
 
-    suspend fun getImageUrl(title: String, actor: String): String?
+    suspend fun getImageUrl(movie: Movie): List<Actor>?
 }
