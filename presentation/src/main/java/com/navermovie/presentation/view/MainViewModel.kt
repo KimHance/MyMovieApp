@@ -3,6 +3,7 @@ package com.navermovie.presentation.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.navermovie.entity.Movie
+import com.navermovie.usecase.DeleteCachedDataUseCase
 import com.navermovie.usecase.FetchMovieDetailUseCase
 import com.navermovie.usecase.FetchMoviePosterUseCase
 import com.navermovie.usecase.GetMovieListUseCase
@@ -18,6 +19,7 @@ class MainViewModel @Inject constructor(
     private val getMovieListUseCase: GetMovieListUseCase,
     private val fetchMovieDetailUseCase: FetchMovieDetailUseCase,
     private val fetchMoviePosterUseCase: FetchMoviePosterUseCase,
+    private val deleteCachedDataUseCase: DeleteCachedDataUseCase
 ) : ViewModel() {
 
     private val emptyMovieList = mutableListOf<Movie>().apply {
@@ -27,6 +29,11 @@ class MainViewModel @Inject constructor(
     private val _movieList = MutableStateFlow(emptyMovieList)
     val movieList = _movieList.asStateFlow()
 
+    fun deleteCachedData(date: Long) {
+        viewModelScope.launch {
+            deleteCachedDataUseCase(date)
+        }
+    }
 
     // flatMap
     fun fetchMovieList() {

@@ -37,7 +37,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun getActorImageList(movie: Movie) {
+    fun getActorImageList(movie: Movie, date: Long) {
         viewModelScope.launch {
             if (movie.actors?.size == 0) {
                 _actorList.value = emptyList()
@@ -46,8 +46,11 @@ class DetailViewModel @Inject constructor(
                     val emptyActorList = mutableListOf<Actor>().apply {
                         repeat(size) { add(Actor()) }
                     }
-                    _actorList.value = emptyActorList
-                    getActorImageUseCase(movie)?.let { actorList ->
+                    getActorImageUseCase(movie, date).stateIn(
+                        viewModelScope,
+                        SharingStarted.Lazily,
+                        emptyActorList
+                    ).collect { actorList ->
                         _actorList.update { actorList }
                     }
                 }

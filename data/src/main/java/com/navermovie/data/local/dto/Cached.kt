@@ -9,19 +9,22 @@ import com.navermovie.entity.Article
 data class CachedActorImageEntity(
     @PrimaryKey
     val movieCode: String,
-    val actorList: List<Actor>
+    val actorList: List<Actor>,
+    val date: Long
 )
 
 @Entity(tableName = "cached_article_table")
 data class CachedArticleEntity(
     @PrimaryKey
     val movieCode: String,
-    val articleList: List<Article>
+    val articleList: List<Article>,
+    val date: Long
 )
 
 @Entity(tableName = "cached_movie_story")
 data class CachedStoryEntity(
     @PrimaryKey
     val movieCode: String,
-    val movieStory: String
+    val movieStory: String,
+    val date: Long
 )

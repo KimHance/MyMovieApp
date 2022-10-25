@@ -15,18 +15,12 @@ class CachedDataSourceImpl @Inject constructor(
     private val cachedArticleDao: CachedArticleDao,
     private val cachedStoryDao: CachedStoryDao
 ) : CachedDataSource {
-    override fun getActorList(code: String): Flow<CachedActorImageEntity>? =
+    override fun getActorList(code: String): Flow<CachedActorImageEntity> =
         cachedActorDao.getActorList(code)
 
-    override fun getArticleList(code: String): Flow<CachedArticleEntity>? =
+    override fun getArticleList(code: String): Flow<CachedArticleEntity> =
         cachedArticleDao.getArticleList(code)
 
-    override fun getMovieStory(code: String): Flow<CachedStoryEntity>? =
+    override fun getMovieStory(code: String): Flow<CachedStoryEntity> =
         cachedStoryDao.getMovieStory(code)
-
-    override suspend fun deleteAllCachedActor() =
-        cachedActorDao.deleteAllCachedActor()
-
-    override suspend fun deleteAllCachedArticle() =
-        cachedArticleDao.deleteAllCachedArticle()
 }

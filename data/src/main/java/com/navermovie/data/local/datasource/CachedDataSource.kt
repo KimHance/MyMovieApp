@@ -6,9 +6,7 @@ import com.navermovie.data.local.dto.CachedStoryEntity
 import kotlinx.coroutines.flow.Flow
 
 interface CachedDataSource {
-    fun getActorList(code: String): Flow<CachedActorImageEntity>?
-    fun getArticleList(code: String): Flow<CachedArticleEntity>?
-    fun getMovieStory(code: String): Flow<CachedStoryEntity>?
-    suspend fun deleteAllCachedActor()
-    suspend fun deleteAllCachedArticle()
+    fun getActorList(code: String): Flow<CachedActorImageEntity>
+    fun getArticleList(code: String): Flow<CachedArticleEntity>
+    fun getMovieStory(code: String): Flow<CachedStoryEntity>
 }

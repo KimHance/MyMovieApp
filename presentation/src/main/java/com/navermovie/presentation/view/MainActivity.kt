@@ -19,5 +19,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         viewModel.fetchMovieList()
+        viewModel.deleteCachedData(System.currentTimeMillis())
     }
 }
