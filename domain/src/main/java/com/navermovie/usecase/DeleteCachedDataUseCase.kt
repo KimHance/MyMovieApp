@@ -7,6 +7,9 @@ class DeleteCachedDataUseCase @Inject constructor(
     private val repository: LocalMovieRepository
 ) {
     suspend operator fun invoke(date: Long) {
-        repository.deleteCachedActor(date)
+        repository.apply {
+            deleteCachedActor(date)
+            deleteCachedArticle(date)
+        }
     }
 }

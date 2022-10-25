@@ -23,7 +23,6 @@ import com.navermovie.presentation.view.detail.adapter.DetailArticleAdapter
 import com.navermovie.presentation.view.detail.adapter.DetailGenreAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class MovieDetailFragment :
@@ -98,8 +97,9 @@ class MovieDetailFragment :
 
     private fun initSelectedMovie() {
         binding.movie = navArgs.movie
-        detailViewModel.getActorImageList(navArgs.movie, System.currentTimeMillis())
-        detailViewModel.getMovieArticle(navArgs.movie)
+        val currentTime = System.currentTimeMillis()
+        detailViewModel.getActorImageList(navArgs.movie, currentTime)
+        detailViewModel.getMovieArticle(navArgs.movie, currentTime)
     }
 
     private fun doOnClick(item: Article) {

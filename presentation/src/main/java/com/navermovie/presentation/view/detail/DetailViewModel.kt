@@ -58,15 +58,18 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun getMovieArticle(movie: Movie) {
+    fun getMovieArticle(movie: Movie, date: Long) {
         viewModelScope.launch {
             val emptyArticleList = mutableListOf<Article>().apply {
                 repeat(5) { add(Article()) }
             }
-            _articleList.value = emptyArticleList
-            with(getMovieArticleUseCase(movie)) {
-                if (this != null) {
-                    _articleList.update { this }
+            getMovieArticleUseCase(movie, date).stateIn(
+                viewModelScope,
+                SharingStarted.Lazily,
+                emptyArticleList
+            ).collect { articleList ->
+                if (articleList != null) {
+                    _articleList.update { articleList }
                 } else {
                     _articleList.value = emptyList()
                 }

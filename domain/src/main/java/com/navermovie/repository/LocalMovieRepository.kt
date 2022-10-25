@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalMovieRepository {
     fun getActorList(code: String): Flow<List<Actor>?>
-    fun getArticleList(code: String): Flow<List<Article>>?
+    fun getArticleList(code: String): Flow<List<Article>?>
     fun getMovieStory(code: String): Flow<String>?
     suspend fun deleteCachedActor(date: Long)
     suspend fun deleteCachedArticle(date: Long)

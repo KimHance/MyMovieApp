@@ -5,6 +5,7 @@ import com.navermovie.data.local.dao.CachedArticleDao
 import com.navermovie.data.local.dao.CachedStoryDao
 import com.navermovie.data.local.datasource.CachedDataSource
 import com.navermovie.data.local.dto.CachedActorImageEntity
+import com.navermovie.data.local.dto.CachedArticleEntity
 import com.navermovie.di.DispatcherModule
 import com.navermovie.entity.Actor
 import com.navermovie.entity.Article
@@ -34,8 +35,17 @@ class LocalMovieRepositoryImpl @Inject constructor(
         }
     }.flowOn(dispatcherIO)
 
-    override fun getArticleList(code: String) =
-        dataSource.getArticleList(code).filterIsInstance<List<Article>>()
+    override fun getArticleList(code: String) = flow {
+        with(dataSource.getArticleList(code)) {
+            this.collect { cachedEntity ->
+                if (cachedEntity == null) {
+                    emit(null)
+                } else {
+                    emit(cachedEntity.articleList)
+                }
+            }
+        }
+    }.flowOn(dispatcherIO)
 
     override fun getMovieStory(code: String) =
         dataSource.getMovieStory(code).filterIsInstance<String>()
@@ -51,7 +61,10 @@ class LocalMovieRepositoryImpl @Inject constructor(
         cachedActorDao.saveActorList(entity)
     }
 
-    override suspend fun saveArticle(code: String, list: List<Article>, date: Long) {}
+    override suspend fun saveArticle(code: String, list: List<Article>, date: Long) {
+        val entity = CachedArticleEntity(code, list, date)
+        cachedArticleDao.saveArticleList(entity)
+    }
 
     override suspend fun saveMovieStory(code: String, story: String, date: Long) {}
 }
