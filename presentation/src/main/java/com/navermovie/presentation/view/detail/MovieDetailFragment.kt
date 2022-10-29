@@ -12,10 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.navermovie.entity.Article
-import com.navermovie.presentation.CHROME
-import com.navermovie.presentation.R
-import com.navermovie.presentation.YOUTUBE
-import com.navermovie.presentation.YOUTUBE_WATCH_LINK
+import com.navermovie.presentation.*
 import com.navermovie.presentation.base.BaseFragment
 import com.navermovie.presentation.databinding.FragmentMovieDetailBinding
 import com.navermovie.presentation.view.detail.adapter.DetailActorAdapter
@@ -66,6 +63,9 @@ class MovieDetailFragment :
             }
             rvDetailActors.adapter = actorAdapter
             rvDetailArticle.adapter = articleAdapter
+            ivDetailShare.setOnClickListener {
+                sendKakaoMessage()
+            }
         }
     }
 
@@ -100,6 +100,23 @@ class MovieDetailFragment :
         val currentTime = System.currentTimeMillis()
         detailViewModel.getActorImageList(navArgs.movie, currentTime)
         detailViewModel.getMovieArticle(navArgs.movie, currentTime)
+    }
+
+    private fun sendKakaoMessage() {
+        binding.movie?.let {
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                setType("text/html")
+                putExtra(
+                    Intent.EXTRA_TEXT, "${it?.title}(${it.openDate}개봉) \n\n" +
+                            "예매하기 \n" +
+                            "CGV : $CGV_TICKETING \n\n" +
+                            "롯데시네마 : $LOTTE_CINEMA_TICKETING \n\n" +
+                            "메가박스 : $MEGA_BOX_BOOKING \n"
+                )
+                setPackage(KAKAO_TALK)
+            }
+            startActivity(Intent.createChooser(intent, "${it?.title}"))
+        }
     }
 
     private fun doOnClick(item: Article) {
