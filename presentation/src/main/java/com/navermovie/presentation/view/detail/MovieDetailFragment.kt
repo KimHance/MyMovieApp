@@ -66,6 +66,12 @@ class MovieDetailFragment :
             ivDetailShare.setOnClickListener {
                 sendKakaoMessage()
             }
+            ivTicket.setOnClickListener {
+                TicketingBottomSheetDialogFragment().show(
+                    requireActivity().supportFragmentManager,
+                    "ticketing_bottom_sheet"
+                )
+            }
         }
     }
 

@@ -9,4 +9,8 @@
     <string name="actors">캐스팅</string>
     <string name="directors">감독</string>
     <string name="article">관련 기사</string>
+    <string name="ticketing">예매하기</string>
+    <string name="lotte_cinema">롯데시네마</string>
+    <string name="cgv">CGV</string>
+    <string name="mega_box">메가박스</string>
 </resources>
