@@ -1,12 +1,12 @@
 package com.navermovie.data.remote.response
 
 
-import kotlinx.serialization.SerialName
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class KakaoImageResponse(
-    @SerialName("documents")
+    @SerializedName("documents")
     val documents: List<Document?>?,
 ) {
     @Serializable

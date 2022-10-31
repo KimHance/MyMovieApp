@@ -1,6 +1,5 @@
 package com.navermovie.data.repositoryimpl
 
-import android.util.Log
 import com.navermovie.PLOT_ERROR
 import com.navermovie.data.remote.datasource.*
 import com.navermovie.data.remote.response.toActorString
@@ -107,8 +106,7 @@ class RemoteMovieRepositoryImpl @Inject constructor(
         return runCatching {
             kmdbSearchDataSource.getMoviePlot(movie.title)
         }.mapCatching {
-            Log.d("결과", "$it")
-            var plot = ""
+            var plot = PLOT_ERROR
             it?.data?.first()?.result?.forEach { result ->
                 result?.directors?.director?.forEach { directors ->
                     if (directors?.directorNm == director) {
