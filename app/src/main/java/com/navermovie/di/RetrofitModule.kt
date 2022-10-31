@@ -1,9 +1,6 @@
 package com.navermovie.di
 
-import com.navermovie.data.remote.service.KakaoSearchService
-import com.navermovie.data.remote.service.KoficMovieService
-import com.navermovie.data.remote.service.NaverSearchService
-import com.navermovie.data.remote.service.YoutubeService
+import com.navermovie.data.remote.service.*
 import com.navermovie.utils.KakaoAuthInterceptor
 import com.navermovie.utils.NaverAuthInterceptor
 import dagger.Module
@@ -36,6 +33,10 @@ class RetrofitModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class KakaoRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class KmdbRetrofit
 
     // for Retrofit
     @Provides
@@ -89,6 +90,20 @@ class RetrofitModule {
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(KAKAO_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @KmdbRetrofit
+    fun provideKmdbRetrofit(
+        okHttpClient: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(KMDB_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
@@ -163,10 +178,17 @@ class RetrofitModule {
         @KakaoRetrofit retrofit: Retrofit
     ): KakaoSearchService = retrofit.create(KakaoSearchService::class.java)
 
+    @Provides
+    @Singleton
+    fun provideKmdbService(
+        @KmdbRetrofit retrofit: Retrofit
+    ): KmdbSearchService = retrofit.create(KmdbSearchService::class.java)
+
     companion object {
         const val NAVER_BASE_URL = "https://openapi.naver.com/v1/search/"
         const val KOFIC_BASE_URL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/"
         const val YOUTUBE_BASE_URL = "https://www.googleapis.com/youtube/v3/"
         const val KAKAO_BASE_URL = "https://dapi.kakao.com/"
+        const val KMDB_BASE_URL = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/"
     }
 }
