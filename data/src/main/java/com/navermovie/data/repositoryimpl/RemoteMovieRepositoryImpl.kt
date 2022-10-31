@@ -1,9 +1,8 @@
 package com.navermovie.data.repositoryimpl
 
-import com.navermovie.data.remote.datasource.KakaoSearchDataSource
-import com.navermovie.data.remote.datasource.KoficMovieDataSource
-import com.navermovie.data.remote.datasource.NaverSearchDataSource
-import com.navermovie.data.remote.datasource.YoutubeDataSource
+import android.util.Log
+import com.navermovie.PLOT_ERROR
+import com.navermovie.data.remote.datasource.*
 import com.navermovie.data.remote.response.toActorString
 import com.navermovie.data.remote.response.toAuditString
 import com.navermovie.data.remote.response.toDirectorString
@@ -19,6 +18,7 @@ class RemoteMovieRepositoryImpl @Inject constructor(
     private val naverSearchDataSource: NaverSearchDataSource,
     private val youtubeDataSource: YoutubeDataSource,
     private val kakaoSearchDataSource: KakaoSearchDataSource,
+    private val kmdbSearchDataSource: KmdbSearchDataSource
 ) : RemoteMovieRepository {
 
     override suspend fun getMovieList(): List<Movie>? {
@@ -100,5 +100,23 @@ class RemoteMovieRepositoryImpl @Inject constructor(
                 )
             }
         }.getOrNull()
+    }
+
+    override suspend fun getMoviePlot(movie: Movie): String {
+        val director = movie.directors?.first()
+        return runCatching {
+            kmdbSearchDataSource.getMoviePlot(movie.title)
+        }.mapCatching {
+            Log.d("결과", "$it")
+            var plot = ""
+            it?.data?.first()?.result?.forEach { result ->
+                result?.directors?.director?.forEach { directors ->
+                    if (directors?.directorNm == director) {
+                        plot = result.plots?.plot?.first()?.plotText.toString()
+                    }
+                }
+            }
+            plot
+        }.getOrDefault(PLOT_ERROR)
     }
 }

@@ -97,6 +97,11 @@ class MovieDetailFragment :
                         articleAdapter.submitList(articleList?.toList())
                     }
                 }
+                launch {
+                    detailViewModel.moviePlot.collect { plot ->
+                        binding.plot = plot
+                    }
+                }
             }
         }
     }
@@ -106,6 +111,7 @@ class MovieDetailFragment :
         val currentTime = System.currentTimeMillis()
         detailViewModel.getActorImageList(navArgs.movie, currentTime)
         detailViewModel.getMovieArticle(navArgs.movie, currentTime)
+        detailViewModel.getMoviePlot(navArgs.movie)
     }
 
     private fun sendKakaoMessage() {

@@ -16,4 +16,6 @@ interface RemoteMovieRepository {
     suspend fun getImageUrl(movie: Movie): List<Actor>?
 
     suspend fun getMovieArticle(movie: Movie): List<Article>?
+
+    suspend fun getMoviePlot(movie: Movie): String
 }

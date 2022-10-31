@@ -8,6 +8,10 @@
         <variable
             name="movie"
             type="com.navermovie.entity.Movie" />
+
+        <variable
+            name="plot"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -264,8 +268,8 @@
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:gravity="center"
-                    android:maxLines="3"
-                    android:text="줄거리를 아직 못받아요ㅠㅠ "
+                    android:maxLines="5"
+                    android:text="@{plot}"
                     android:textColor="@color/detail_gray"
                     android:textSize="15sp"
                     android:textStyle="bold"

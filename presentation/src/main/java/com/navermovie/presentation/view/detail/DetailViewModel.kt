@@ -7,6 +7,7 @@ import com.navermovie.entity.Article
 import com.navermovie.entity.Movie
 import com.navermovie.usecase.GetActorImageUseCase
 import com.navermovie.usecase.GetMovieArticleUseCase
+import com.navermovie.usecase.GetMoviePlotUseCase
 import com.navermovie.usecase.GetYoutubeLinkIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -18,6 +19,7 @@ class DetailViewModel @Inject constructor(
     private val getYoutubeLinkIdUseCase: GetYoutubeLinkIdUseCase,
     private val getActorImageUseCase: GetActorImageUseCase,
     private val getMovieArticleUseCase: GetMovieArticleUseCase,
+    private val getMoviePlotUseCase: GetMoviePlotUseCase
 ) : ViewModel() {
 
     private val _selectedMovieLinkId = MutableSharedFlow<String>()
@@ -28,6 +30,10 @@ class DetailViewModel @Inject constructor(
 
     private val _articleList = MutableStateFlow<List<Article>?>(emptyList())
     val articleList = _articleList.asStateFlow()
+
+    private val _moviePlot = MutableStateFlow<String>("")
+    val moviePlot = _moviePlot.asStateFlow()
+
 
     fun setYoutubeVideoId(title: String) {
         viewModelScope.launch {
@@ -74,6 +80,12 @@ class DetailViewModel @Inject constructor(
                     _articleList.value = emptyList()
                 }
             }
+        }
+    }
+
+    fun getMoviePlot(movie: Movie) {
+        viewModelScope.launch {
+            _moviePlot.value = getMoviePlotUseCase(movie)
         }
     }
 }

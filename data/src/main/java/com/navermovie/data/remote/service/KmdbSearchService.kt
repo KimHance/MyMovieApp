@@ -1,7 +1,6 @@
 package com.navermovie.data.remote.service
 
 import com.navermovie.KMDB_KEY
-import com.navermovie.data.remote.response.KmdbResponse
 import com.navermovie.data.remote.response.Tmp
 import retrofit2.Response
 import retrofit2.http.GET
@@ -13,5 +12,5 @@ interface KmdbSearchService {
     suspend fun getMoviePlot(
         @Query("query") query: String,
         @Query("ServiceKey") key: String = KMDB_KEY
-    ): Response<KmdbResponse>
+    ): Response<Tmp>
 }
