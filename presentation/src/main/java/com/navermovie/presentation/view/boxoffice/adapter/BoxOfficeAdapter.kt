@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.navermovie.entity.Movie
 import com.navermovie.presentation.R
 import com.navermovie.presentation.view.boxoffice.viewholder.BoxOfficeViewHolder
+import com.navermovie.presentation.view.boxoffice.viewholder.ErrorViewHolder
 import com.navermovie.presentation.view.boxoffice.viewholder.SkeletonViewHolder
 
 const val UN_FETCHED = 0
 const val FETCHED = 1
+const val ERROR = 2
 
 class BoxOfficeAdapter(
     private val itemClickListener: (Movie, View) -> Unit
@@ -32,7 +34,7 @@ class BoxOfficeAdapter(
                     itemClickListener
                 )
             }
-            else -> {
+            UN_FETCHED -> {
                 SkeletonViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
@@ -42,15 +44,26 @@ class BoxOfficeAdapter(
                     )
                 )
             }
+            else -> {
+                ErrorViewHolder(
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.item_box_office_error,
+                        parent,
+                        false
+                    )
+                )
+            }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (getItem(position).isFetched) {
-            true -> {
-                (holder as BoxOfficeViewHolder).bind(getItem(position))
-            }
-            false -> {
+        if (getItem(position).isFetched) {
+            (holder as BoxOfficeViewHolder).bind(getItem(position))
+        } else {
+            if (getItem(position).isError) {
+                (holder as ErrorViewHolder).bind()
+            } else {
                 (holder as SkeletonViewHolder).bind()
             }
         }
@@ -60,7 +73,11 @@ class BoxOfficeAdapter(
         return if (getItem(position).isFetched) {
             FETCHED
         } else {
-            UN_FETCHED
+            if (getItem(position).isError) {
+                ERROR
+            } else {
+                UN_FETCHED
+            }
         }
     }
 
