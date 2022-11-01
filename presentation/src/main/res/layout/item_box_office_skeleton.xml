@@ -8,13 +8,13 @@
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:layout_width="120dp"
-        app:shimmer_base_alpha="0.8"
-        android:layout_height="240dp">
+        android:layout_height="240dp"
+        app:shimmer_base_alpha="0.8">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_item_skeleton" />
+            android:background="@drawable/bg_item_skeleton"/>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 

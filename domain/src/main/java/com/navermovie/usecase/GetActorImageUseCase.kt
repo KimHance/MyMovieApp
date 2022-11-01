@@ -17,11 +17,7 @@ class GetActorImageUseCase @Inject constructor(
             if (it != null) {
                 emit(it)
             } else {
-                remoteRepository.getImageUrl(movie).also { list ->
-                    list?.let {
-                        localRepository.saveActorList(movie.movieCd, list, date)
-                    }
-                }
+                emit(remoteRepository.getImageUrl(movie))
             }
         }
     }.flowOn(Dispatchers.Default)

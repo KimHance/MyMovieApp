@@ -13,4 +13,6 @@
     <string name="lotte_cinema">롯데시네마</string>
     <string name="cgv">CGV</string>
     <string name="mega_box">메가박스</string>
+    <string name="no_image">No\nImage</string>
+    <string name="failed_to_get_movie">영화정보를 받아올 수 없습니다.</string>
 </resources>

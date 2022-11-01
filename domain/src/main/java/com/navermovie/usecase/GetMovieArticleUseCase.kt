@@ -17,11 +17,7 @@ class GetMovieArticleUseCase @Inject constructor(
             if (it != null) {
                 emit(it)
             } else {
-                remoteRepository.getMovieArticle(movie).also { list ->
-                    list?.let {
-                        localRepository.saveArticle(movie.movieCd, list, date)
-                    }
-                }
+                emit(remoteRepository.getMovieArticle(movie))
             }
         }
     }.flowOn(Dispatchers.Default)

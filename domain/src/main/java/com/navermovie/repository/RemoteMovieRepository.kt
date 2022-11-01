@@ -3,19 +3,20 @@ package com.navermovie.repository
 import com.navermovie.entity.Actor
 import com.navermovie.entity.Article
 import com.navermovie.entity.Movie
+import kotlinx.coroutines.flow.Flow
 
 interface RemoteMovieRepository {
-    suspend fun getMovieList(): List<Movie>?
+    fun getMovieList(): Flow<List<Movie>?>
 
-    suspend fun fetchMovieDetail(movie: Movie): Movie
+    fun fetchMovieDetail(movie: Movie): Flow<Movie?>
 
-    suspend fun fetchMoviePoster(movie: Movie): Movie
+    fun fetchMoviePoster(movie: Movie): Flow<Movie?>
 
-    suspend fun getMovieTeaser(query: String): String?
+    fun getMovieTeaser(query: String): Flow<String?>
 
-    suspend fun getImageUrl(movie: Movie): List<Actor>?
+    fun getImageUrl(movie: Movie): Flow<Actor>
 
-    suspend fun getMovieArticle(movie: Movie): List<Article>?
+    fun getMovieArticle(movie: Movie): Flow<List<Article>?>
 
-    suspend fun getMoviePlot(movie: Movie): String
+    fun getMoviePlot(movie: Movie): Flow<String>
 }

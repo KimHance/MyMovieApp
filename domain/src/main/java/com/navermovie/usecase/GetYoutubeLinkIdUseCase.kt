@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetYoutubeLinkIdUseCase @Inject constructor(
     private val repository: RemoteMovieRepository
 ) {
-    suspend operator fun invoke(query: String) = repository.getMovieTeaser(query)
+    operator fun invoke(query: String) = repository.getMovieTeaser(query)
 }

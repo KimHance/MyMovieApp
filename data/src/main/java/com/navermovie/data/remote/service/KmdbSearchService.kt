@@ -12,5 +12,5 @@ interface KmdbSearchService {
     suspend fun getMoviePlot(
         @Query("query") query: String,
         @Query("ServiceKey") key: String = KMDB_KEY
-    ): Response<KmdbResponse>
+    ): KmdbResponse
 }
