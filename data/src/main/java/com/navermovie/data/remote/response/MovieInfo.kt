@@ -1,5 +1,6 @@
 package com.navermovie.data.remote.response
 
+import com.navermovie.entity.Directors
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -30,6 +31,7 @@ data class Audit(
 @Serializable
 data class Director(
     val peopleNm: String, // 추창민
+    val peopleNmEn: String
 )
 
 @Serializable
@@ -54,9 +56,13 @@ fun List<Audit?>?.toAuditString(): List<String>? {
     }
 }
 
-fun List<Director?>?.toDirectorString(): List<String>? {
+fun List<Director?>?.toDirectorString(): List<Directors>? {
     return this?.map {
-        it?.peopleNm.toString()
+        Directors(
+            name = it?.peopleNm.toString(),
+            englishName = it?.peopleNmEn.toString()
+        )
+
     }
 }
 

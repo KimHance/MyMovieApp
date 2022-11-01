@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.navermovie.entity.Directors
 import com.navermovie.presentation.R
 import java.text.SimpleDateFormat
 
@@ -45,11 +46,11 @@ fun ImageView.bindImage(imageUrl: String?) {
 }
 
 @BindingAdapter("bindDirector")
-fun TextView.bindDirector(directorList: List<String>?) {
+fun TextView.bindDirector(directorList: List<Directors>?) {
     var tmpDirectorText = ""
     directorList?.let { list ->
         for (director in list) {
-            tmpDirectorText += "($director) "
+            tmpDirectorText += "(${director.name}) "
         }
     }
     text = tmpDirectorText

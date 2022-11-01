@@ -102,14 +102,15 @@ class RemoteMovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMoviePlot(movie: Movie): String {
-        val director = movie.directors?.first()
+        val director = movie.directors?.first()?.name
+        val englishName = movie.directors?.first()?.englishName
         return runCatching {
             kmdbSearchDataSource.getMoviePlot(movie.title)
         }.mapCatching {
             var plot = PLOT_ERROR
             it?.data?.first()?.result?.forEach { result ->
                 result?.directors?.director?.forEach { directors ->
-                    if (directors?.directorNm == director) {
+                    if ((directors?.directorNm == director) or (directors?.directorEnNm == englishName)) {
                         plot = result.plots?.plot?.first()?.plotText.toString()
                     }
                 }

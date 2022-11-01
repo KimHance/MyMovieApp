@@ -19,7 +19,8 @@ data class KmdbResponse(
                 val director: List<Director?>
             ) {
                 data class Director(
-                    val directorNm: String? // 데잉 예
+                    val directorNm: String?, // 데잉 예
+                    val directorEnNm: String?
                 )
             }
             data class Plots(
