@@ -14,7 +14,7 @@ interface RemoteMovieRepository {
 
     fun getMovieTeaser(query: String): Flow<String?>
 
-    fun getImageUrl(movie: Movie): Flow<Actor>
+    suspend fun getImageUrl(movie: Movie): Flow<List<Actor>>
 
     fun getMovieArticle(movie: Movie): Flow<List<Article>?>
 

@@ -4,9 +4,9 @@ import com.navermovie.data.local.datasource.CachedDataSource
 import com.navermovie.data.local.datasource.impl.CachedDataSourceImpl
 import com.navermovie.data.remote.datasource.*
 import com.navermovie.data.remote.datasource.impl.*
-import com.navermovie.data.repositoryimpl.LocalMovieRepositoryImpl
+import com.navermovie.data.repositoryimpl.MovieRepositoryImpl
 import com.navermovie.data.repositoryimpl.RemoteMovieRepositoryImpl
-import com.navermovie.repository.LocalMovieRepository
+import com.navermovie.repository.MovieRepository
 import com.navermovie.repository.RemoteMovieRepository
 import dagger.Binds
 import dagger.Module
@@ -62,7 +62,7 @@ abstract class DataModule {
 
     @Binds
     @Singleton
-    abstract fun bindLocalMovieRepository(
-        impl: LocalMovieRepositoryImpl
-    ): LocalMovieRepository
+    abstract fun bindMovieRepository(
+        impl: MovieRepositoryImpl
+    ): MovieRepository
 }

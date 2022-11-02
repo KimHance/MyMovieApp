@@ -5,10 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.navermovie.entity.Actor
 import com.navermovie.entity.Article
 import com.navermovie.entity.Movie
-import com.navermovie.usecase.GetActorImageUseCase
-import com.navermovie.usecase.GetMovieArticleUseCase
-import com.navermovie.usecase.GetMoviePlotUseCase
-import com.navermovie.usecase.GetYoutubeLinkIdUseCase
+import com.navermovie.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -19,7 +16,10 @@ class DetailViewModel @Inject constructor(
     private val getYoutubeLinkIdUseCase: GetYoutubeLinkIdUseCase,
     private val getActorImageUseCase: GetActorImageUseCase,
     private val getMovieArticleUseCase: GetMovieArticleUseCase,
-    private val getMoviePlotUseCase: GetMoviePlotUseCase
+    private val getMoviePlotUseCase: GetMoviePlotUseCase,
+    private val saveActorListUseCase: SaveActorListUseCase,
+    private val saveArticleListUseCase: SaveArticleListUseCase,
+    private val saveMovieStoryUseCase: SaveMovieStoryUseCase
 ) : ViewModel() {
 
     private val _selectedMovieLinkId = MutableSharedFlow<String>()
@@ -37,8 +37,12 @@ class DetailViewModel @Inject constructor(
 
     fun setYoutubeVideoId(title: String) {
         viewModelScope.launch {
-            getYoutubeLinkIdUseCase(title)?.let { link ->
-                _selectedMovieLinkId.emit(link)
+            getYoutubeLinkIdUseCase(title).collect { link ->
+                if (link.isNullOrBlank()) {
+                    _selectedMovieLinkId.emit("")
+                } else {
+                    _selectedMovieLinkId.emit(link)
+                }
             }
         }
     }
@@ -52,12 +56,15 @@ class DetailViewModel @Inject constructor(
                     val emptyActorList = mutableListOf<Actor>().apply {
                         repeat(size) { add(Actor()) }
                     }
-                    getActorImageUseCase(movie, date).stateIn(
+                    getActorImageUseCase(movie).stateIn(
                         viewModelScope,
                         SharingStarted.Lazily,
-                        emptyActorList
-                    ).collect { actorList ->
-                        _actorList.update { actorList }
+                        Pair(emptyActorList, true)
+                    ).collect { data ->
+                        _actorList.update { data.first }
+                        if (!data.second) {
+                            data.first?.let { saveActorListUseCase(movie.movieCd, it, date) }
+                        }
                     }
                 }
             }
@@ -69,23 +76,27 @@ class DetailViewModel @Inject constructor(
             val emptyArticleList = mutableListOf<Article>().apply {
                 repeat(5) { add(Article()) }
             }
-            getMovieArticleUseCase(movie, date).stateIn(
+            getMovieArticleUseCase(movie).stateIn(
                 viewModelScope,
                 SharingStarted.Lazily,
-                emptyArticleList
-            ).collect { articleList ->
-                if (articleList != null) {
-                    _articleList.update { articleList }
-                } else {
-                    _articleList.value = emptyList()
+                Pair(emptyArticleList, true)
+            ).collect { data ->
+                _articleList.update { data.first }
+                if (!data.second) {
+                    data.first?.let { saveArticleListUseCase(movie.movieCd, it, date) }
                 }
             }
         }
     }
 
-    fun getMoviePlot(movie: Movie) {
+    fun getMoviePlot(movie: Movie, date: Long) {
         viewModelScope.launch {
-            _moviePlot.value = getMoviePlotUseCase(movie)
+            getMoviePlotUseCase(movie).collect { data ->
+                _moviePlot.value = data.first
+                if (!data.second) {
+                    saveMovieStoryUseCase(movie.movieCd, data.first, date)
+                }
+            }
         }
     }
 }

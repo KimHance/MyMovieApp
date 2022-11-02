@@ -10,7 +10,7 @@ import com.navermovie.entity.Actor
 import com.navermovie.entity.Article
 import com.navermovie.entity.Movie
 import com.navermovie.repository.RemoteMovieRepository
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class RemoteMovieRepositoryImpl @Inject constructor(
@@ -88,22 +88,18 @@ class RemoteMovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getImageUrl(movie: Movie) = flow {
+    override suspend fun getImageUrl(movie: Movie): Flow<List<Actor>> {
         val title = movie.title
-        movie.actors?.map { actor ->
+        return flowOf(movie.actors?.asFlow()?.map { actor ->
             val query = "$title $actor"
-            kakaoSearchDataSource.getImage(query).collect { result ->
-                emit(
-                    runCatching {
-                        result
-                    }.mapCatching {
-                        Actor(actor, result?.documents?.first()?.image_url, true)
-                    }.getOrDefault(
-                        Actor(actor, isFetched = true)
-                    )
-                )
-            }
-        }
+            runCatching {
+                kakaoSearchDataSource.getImage(query)
+            }.mapCatching { result ->
+                Actor(actor, result.documents?.first()?.image_url, true)
+            }.getOrDefault(
+                Actor(actor, isFetched = true)
+            )
+        }?.toList() ?: emptyList())
     }
 
     override fun getMovieArticle(movie: Movie) = flow {

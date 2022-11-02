@@ -44,7 +44,7 @@ class MainViewModel @Inject constructor(
                     emit(
                         list?.map { unFetchedMovie ->
                             fetchMovieDetailUseCase(unFetchedMovie)
-                                .zip(fetchMoviePosterUseCase(unFetchedMovie)) { detailMovie, posterMovie ->
+                                .combine(fetchMoviePosterUseCase(unFetchedMovie)) { detailMovie, posterMovie ->
                                     unFetchedMovie.copy(
                                         openDate = detailMovie?.openDate,
                                         actors = detailMovie?.actors,
