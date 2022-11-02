@@ -1,16 +1,16 @@
 package com.navermovie.presentation.view
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.navermovie.entity.Movie
+import com.navermovie.presentation.view.boxoffice.BoxOfficeUiState
 import com.navermovie.usecase.DeleteCachedDataUseCase
 import com.navermovie.usecase.FetchMovieDetailUseCase
 import com.navermovie.usecase.FetchMoviePosterUseCase
 import com.navermovie.usecase.GetMovieListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,8 +26,9 @@ class MainViewModel @Inject constructor(
         repeat(10) { add(Movie()) }
     }.toList()
 
-    private val _movieList = MutableStateFlow(emptyMovieList)
-    val movieList = _movieList.asStateFlow()
+    private val _boxOfficeUiState =
+        MutableStateFlow<BoxOfficeUiState>(BoxOfficeUiState.Loading(emptyMovieList))
+    val boxOfficeUiState = _boxOfficeUiState.asStateFlow()
 
     fun deleteCachedData(date: Long) {
         viewModelScope.launch {
@@ -35,21 +36,38 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    // flatMap
-    fun fetchMovieList() {
+    fun getMovieList() {
         viewModelScope.launch {
-            val fetchMovieDetailJob = async {
-                getMovieListUseCase()?.map {
-                    fetchMovieDetailUseCase(it)
+            getMovieListUseCase().collect { list ->
+                val start = System.currentTimeMillis()
+                flow {
+                    emit(
+                        list?.map { unFetchedMovie ->
+                            fetchMovieDetailUseCase(unFetchedMovie)
+                                .combine(fetchMoviePosterUseCase(unFetchedMovie)) { detailMovie, posterMovie ->
+                                    unFetchedMovie.copy(
+                                        openDate = detailMovie?.openDate,
+                                        actors = detailMovie?.actors,
+                                        genres = detailMovie?.genres,
+                                        audits = detailMovie?.audits,
+                                        directors = detailMovie?.directors,
+                                        showTime = detailMovie?.showTime,
+                                        poster = posterMovie?.poster,
+                                        rating = posterMovie?.rating,
+                                        isFetched = true
+                                    )
+                                }.catch {
+                                    _boxOfficeUiState.value = BoxOfficeUiState.Error
+                                }.first()
+                        }
+                    )
+                }.catch {
+                    _boxOfficeUiState.value = BoxOfficeUiState.Error
+                }.collect { fetchedList ->
+                    _boxOfficeUiState.value = BoxOfficeUiState.Success(fetchedList)
+                    val end = System.currentTimeMillis()
+                    Log.d("시간차이", "${end - start}")
                 }
-            }
-            val fetchMoviePosterJob = async {
-                fetchMovieDetailJob.await()?.map {
-                    fetchMoviePosterUseCase(it)
-                }
-            }
-            fetchMoviePosterJob.await()?.let { fetchedMovieList ->
-                _movieList.value = fetchedMovieList
             }
         }
     }

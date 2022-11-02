@@ -15,7 +15,8 @@ data class Movie(
     val showTime: String? = "",
     val poster: String? = "",
     val rating: String? = "",
-    val isFetched: Boolean = false
+    val isFetched: Boolean = false,
+    val isError: Boolean = false
 ) : Serializable
 
 data class Directors(

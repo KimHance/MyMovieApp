@@ -109,9 +109,11 @@ class MovieDetailFragment :
     private fun initSelectedMovie() {
         binding.movie = navArgs.movie
         val currentTime = System.currentTimeMillis()
-        detailViewModel.getActorImageList(navArgs.movie, currentTime)
-        detailViewModel.getMovieArticle(navArgs.movie, currentTime)
-        detailViewModel.getMoviePlot(navArgs.movie)
+        detailViewModel.apply {
+            getActorImageList(navArgs.movie, currentTime)
+            getMovieArticle(navArgs.movie, currentTime)
+            getMoviePlot(navArgs.movie, currentTime)
+        }
     }
 
     private fun sendKakaoMessage() {

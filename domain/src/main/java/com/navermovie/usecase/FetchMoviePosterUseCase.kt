@@ -7,5 +7,5 @@ import javax.inject.Inject
 class FetchMoviePosterUseCase @Inject constructor(
     private val repository: RemoteMovieRepository
 ) {
-    suspend operator fun invoke(movie: Movie) = repository.fetchMoviePoster(movie)
+    operator fun invoke(movie: Movie) = repository.fetchMoviePoster(movie)
 }

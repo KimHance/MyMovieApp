@@ -1,7 +1,6 @@
 package com.navermovie.presentation.view.boxoffice
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -9,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import com.google.android.material.snackbar.Snackbar
 import com.navermovie.entity.Movie
 import com.navermovie.presentation.R
 import com.navermovie.presentation.base.BaseFragment
@@ -45,9 +45,28 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
     private fun collectMovieList() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.movieList.collect { movieList ->
-                    boxOfficeAdapter.submitList(movieList.toList())
-                    Log.d("영화", "collectMovieList: ${movieList}")
+                mainViewModel.boxOfficeUiState.collect { state ->
+                    when (state) {
+                        is BoxOfficeUiState.Success -> {
+                            boxOfficeAdapter.submitList(state.data?.toList())
+                        }
+                        is BoxOfficeUiState.Loading -> {
+                            boxOfficeAdapter.submitList(state.data.toList())
+                        }
+                        is BoxOfficeUiState.Error -> {
+                            val errorList = mutableListOf<Movie>().apply {
+                                repeat(10) { add(Movie(isError = true)) }
+                            }.toList()
+                            boxOfficeAdapter.submitList(errorList)
+                            Snackbar
+                                .make(
+                                    requireView(),
+                                    getString(R.string.failed_to_get_movie),
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                .show()
+                        }
+                    }
                 }
             }
         }

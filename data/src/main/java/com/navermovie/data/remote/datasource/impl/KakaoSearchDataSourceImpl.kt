@@ -10,6 +10,5 @@ class KakaoSearchDataSourceImpl @Inject constructor(
 ) : KakaoSearchDataSource {
 
     override suspend fun getImage(query: String): KakaoImageResponse =
-        run { kakaoSearchService.getActorImage(query) }
-
+        kakaoSearchService.getActorImage(query)
 }

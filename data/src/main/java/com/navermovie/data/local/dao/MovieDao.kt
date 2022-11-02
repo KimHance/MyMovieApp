@@ -17,8 +17,11 @@ interface CachedActorDao {
     @Query("DELETE FROM CACHED_ACTOR_IMAGE_TABLE WHERE((:date - date)/ 1000/ (24*60*60)) >= 7")
     suspend fun deleteCachedActor(date: Long)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun saveActorList(cachedActor: CachedActorImageEntity)
+
+    @Query("SELECT EXISTS(SELECT * FROM CACHED_ACTOR_IMAGE_TABLE WHERE movieCode =:code)")
+    fun isActorExists(code: String): Boolean
 }
 
 @Dao
@@ -29,8 +32,11 @@ interface CachedArticleDao {
     @Query("DELETE FROM CACHED_ARTICLE_TABLE WHERE((:date - date)/ 1000/ (24*60*60)) >= 3")
     suspend fun deleteCachedArticle(date: Long)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun saveArticleList(cachedArticle: CachedArticleEntity)
+
+    @Query("SELECT EXISTS(SELECT * FROM CACHED_ARTICLE_TABLE WHERE movieCode =:code)")
+    fun isArticleExists(code: String): Boolean
 }
 
 @Dao
@@ -38,6 +44,9 @@ interface CachedStoryDao {
     @Query("SELECT * FROM CACHED_MOVIE_STORY WHERE movieCode =:code")
     fun getMovieStory(code: String): Flow<CachedStoryEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun saveMovieStory(cachedStory: CachedStoryEntity)
+
+    @Query("SELECT EXISTS(SELECT * FROM CACHED_MOVIE_STORY WHERE movieCode =:code)")
+    fun isPlotExists(code: String): Boolean
 }
