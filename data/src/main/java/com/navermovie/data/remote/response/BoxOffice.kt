@@ -9,11 +9,12 @@ data class KoficBoxOfficeResult(
 
 @Serializable
 data class BoxOfficeResult(
-    val dailyBoxOfficeList: List<DailyBoxOffice>?
+    val weeklyBoxOfficeResult: List<BoxOffice>?,
+    val dailyBoxOfficeList: List<BoxOffice>?
 )
 
 @Serializable
-data class DailyBoxOffice(
+data class BoxOffice(
     val rank: String,
     val rankOldAndNew: String,
     val movieNm: String,

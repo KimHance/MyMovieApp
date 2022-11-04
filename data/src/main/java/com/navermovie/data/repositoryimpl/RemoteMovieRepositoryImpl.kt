@@ -21,22 +21,45 @@ class RemoteMovieRepositoryImpl @Inject constructor(
     private val kmdbSearchDataSource: KmdbSearchDataSource
 ) : RemoteMovieRepository {
 
-    override fun getMovieList() = flow {
+    override fun getDailyMovieList() = flow {
         koficMovieDataSource.getDailyBoxOfficeList().collect { result ->
-            emit(
-                runCatching {
-                    result
-                }.mapCatching {
-                    result?.boxOfficeResult?.dailyBoxOfficeList?.map { boxOffice ->
+            runCatching {
+                result
+            }.onSuccess { list ->
+                list?.forEach { boxOffice ->
+                    emit(
                         Movie(
                             title = boxOffice.movieNm,
                             rank = boxOffice.rank.toInt(),
                             rankType = boxOffice.rankOldAndNew,
                             movieCd = boxOffice.movieCd,
                         )
-                    }
-                }.getOrThrow()
-            )
+                    )
+                }
+            }.onFailure { error ->
+                throw error
+            }
+        }
+    }
+
+    override fun getWeeklyMovieList() = flow {
+        koficMovieDataSource.getWeeklyBoxOfficeList().collect { result ->
+            runCatching {
+                result
+            }.onSuccess { list ->
+                list?.forEach { boxOffice ->
+                    emit(
+                        Movie(
+                            title = boxOffice.movieNm,
+                            rank = boxOffice.rank.toInt(),
+                            rankType = boxOffice.rankOldAndNew,
+                            movieCd = boxOffice.movieCd,
+                        )
+                    )
+                }
+            }.onFailure { error ->
+                throw error
+            }
         }
     }
 
@@ -49,6 +72,7 @@ class RemoteMovieRepositoryImpl @Inject constructor(
                     with(it?.movieInfoResult?.movieInfo) {
                         movie.copy(
                             openDate = this?.openDt,
+                            prodYear = this?.prdtYear,
                             actors = this?.actors.toActorString(),
                             genres = this?.genres.toGenreString(),
                             audits = this?.audits.toAuditString(),
@@ -62,17 +86,33 @@ class RemoteMovieRepositoryImpl @Inject constructor(
     }
 
     override fun fetchMoviePoster(movie: Movie) = flow {
+        val director = movie.directors?.first()?.name
+        val prodYear = movie.prodYear
+        var isPosterFetched = false
         naverSearchDataSource.getMoviePoster(movie.title).collect { result ->
-            emit(
-                runCatching {
-                    result
-                }.mapCatching {
-                    movie.copy(
-                        poster = it?.items?.first()?.image,
-                        rating = it?.items?.first()?.userRating,
-                    )
-                }.getOrThrow()
-            )
+            runCatching {
+                result
+            }.onSuccess {
+                it?.items?.forEach { item ->
+                    val token = item?.director?.split("|")
+                    token?.forEach { name ->
+                        if ((name == director) and (item.pubDate == prodYear)) {
+                            val fetchedMovie = movie.copy(
+                                poster = item.image,
+                                rating = item.userRating,
+                                isFetched = true
+                            )
+                            isPosterFetched = true
+                            emit(fetchedMovie)
+                        }
+                    }
+                }
+                if (!isPosterFetched) {
+                    emit(movie.copy(isFetched = true))
+                }
+            }.onFailure { error ->
+                throw error
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.navermovie
 
 import java.text.SimpleDateFormat
+import java.util.*
 
 const val KOFIC_KEY = "7757453def15a4634a7ae0ff96f6c92c"
 
@@ -19,4 +20,12 @@ const val PLOT_ERROR = "줄거리를 받아올 수 없습니다"
 fun getCurrentDate(): String {
     return SimpleDateFormat("yyyyMMdd").format(System.currentTimeMillis() - 1000L * 60L * 60L * 24L)
         .toString()
+}
+
+fun getLastWeek(): String {
+    val df = SimpleDateFormat("yyyyMMdd")
+    val cal = Calendar.getInstance()
+    cal.time = Date()
+    cal.add(Calendar.DATE, -7)
+    return df.format(cal.time)
 }
