@@ -6,11 +6,13 @@ import com.navermovie.entity.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteMovieRepository {
-    fun getMovieList(): Flow<List<Movie>?>
+    fun getDailyMovieList(): Flow<Movie>
 
-    fun fetchMovieDetail(movie: Movie): Flow<Movie?>
+    fun getWeeklyMovieList(): Flow<Movie>
 
-    fun fetchMoviePoster(movie: Movie): Flow<Movie?>
+    fun fetchMovieDetail(movie: Movie): Flow<Movie>
+
+    fun fetchMoviePoster(movie: Movie): Flow<Movie>
 
     fun getMovieTeaser(query: String): Flow<String?>
 

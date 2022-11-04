@@ -18,7 +18,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel.getMovieList()
+        viewModel.getDailyBoxOfficeList()
+        viewModel.getWeeklyBoxOfficeList()
         viewModel.deleteCachedData(System.currentTimeMillis())
     }
 }

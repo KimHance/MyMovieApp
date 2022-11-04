@@ -16,6 +16,7 @@ data class MovieInfoResult(
 @Serializable
 data class MovieInfo(
     val openDt: String?,
+    val prdtYear: String?,
     val actors: List<Actor?>?,
     val audits: List<Audit?>?,
     val directors: List<Director?>?,

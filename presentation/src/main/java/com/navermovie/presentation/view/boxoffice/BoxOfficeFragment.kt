@@ -45,7 +45,7 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
     private fun collectMovieList() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.boxOfficeUiState.collect { state ->
+                mainViewModel.dailyBoxOfficeUiState.collect { state ->
                     when (state) {
                         is BoxOfficeUiState.Success -> {
                             boxOfficeAdapter.submitList(state.data?.toList())

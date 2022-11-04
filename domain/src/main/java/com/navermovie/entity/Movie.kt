@@ -8,6 +8,7 @@ data class Movie(
     val rankType: String? = "",
     val movieCd: String = "",
     val openDate: String? = "",
+    val prodYear: String? = "",
     val actors: List<String>? = emptyList(),
     val genres: List<String>? = emptyList(),
     val audits: List<String>? = emptyList(),

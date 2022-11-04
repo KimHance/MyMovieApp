@@ -1,7 +1,6 @@
 package com.navermovie.presentation.view.detail.adapter
 
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
@@ -24,9 +23,12 @@ fun TextView.bindShowTime(time: String) {
 }
 
 @BindingAdapter("bindRating")
-fun RatingBar.bindRating(rating: String) {
-    val rate = rating.toFloat() / 2
-    this.rating = rate
+fun TextView.bindRating(rating: String) {
+    text = if (rating.isNullOrBlank()) {
+        "0.0"
+    } else {
+        rating
+    }
 }
 
 @BindingAdapter("bindOpenDate")

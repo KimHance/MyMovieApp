@@ -10,7 +10,7 @@ interface NaverSearchService {
     @GET("movie.json")
     suspend fun getMoviePoster(
         @Query("query") query: String,
-        @Query("display") display: Int = 1
+        @Query("display") display: Int = 20
     ): PosterResult
 
     @GET("news.json")
