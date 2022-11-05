@@ -13,24 +13,71 @@
         android:background="@color/color_main">
 
         <TextView
-            android:id="@+id/tv_daily_best"
+            android:id="@+id/tv_trending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/daily_best"
-            android:textSize="24sp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="25dp"
+            android:text="@string/trending_upper"
             android:textColor="@color/white"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@id/rv_box_office"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_trending_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/trending_lower"
+            android:textColor="@color/box_office_text_background"
+            android:textSize="68sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_trending" />
 
         <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
             android:id="@+id/rv_box_office"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_trending"
             tools:listitem="@layout/item_box_office_movie" />
 
+        <TextView
+            android:id="@+id/tv_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/week"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_trending"
+            app:layout_constraintTop_toBottomOf="@id/rv_box_office" />
+
+        <TextView
+            android:id="@+id/tv_box_office_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/box_office"
+            android:textColor="@color/box_office_text_background"
+            android:textSize="68sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_week" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_week"
+            tools:listitem="@layout/item_box_office_week" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

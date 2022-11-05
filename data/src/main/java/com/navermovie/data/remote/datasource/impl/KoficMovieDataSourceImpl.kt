@@ -16,7 +16,7 @@ class KoficMovieDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getWeeklyBoxOfficeList(): Flow<List<BoxOffice>?> = flow {
-        emit(movieService.getWeeklyBoxOffice().boxOfficeResult?.weeklyBoxOfficeResult)
+        emit(movieService.getWeeklyBoxOffice().boxOfficeResult?.weeklyBoxOfficeList)
     }
 
     override suspend fun getMovieDetail(movieCd: String) = flow {

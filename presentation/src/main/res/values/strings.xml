@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MovieApp</string>
-    <string name="daily_best">Daily Best</string>
+    <string name="trending_upper">Trending</string>
     <string name="rating">Rating</string>
     <string name="open_data_format">MM월 dd일 개봉</string>
     <string name="watch_teaser">Watch Teaser</string>
@@ -15,4 +15,11 @@
     <string name="mega_box">메가박스</string>
     <string name="no_image">No\nImage</string>
     <string name="failed_to_get_movie">영화정보를 받아올 수 없습니다.</string>
+    <string name="trending_lower">trending</string>
+    <string name="home">home</string>
+    <string name="detail">detail</string>
+    <string name="search">search</string>
+    <string name="bookmark">bookmark</string>
+    <string name="week">Week</string>
+    <string name="box_office">Box Office</string>
 </resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@android:color/transparent">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sl_poster"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:background="@drawable/bg_item_skeleton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shimmer_base_alpha="0.8" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sl_title"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/bg_item_skeleton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sl_poster"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shimmer_base_alpha="0.8" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sl_etc"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/bg_item_skeleton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shimmer_base_alpha="0.8" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
