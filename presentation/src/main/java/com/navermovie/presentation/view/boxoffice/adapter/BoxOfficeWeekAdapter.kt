@@ -1,7 +1,6 @@
 package com.navermovie.presentation.view.boxoffice.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -9,46 +8,30 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.navermovie.entity.Movie
 import com.navermovie.presentation.R
-import com.navermovie.presentation.view.boxoffice.viewholder.BoxOfficeViewHolder
-import com.navermovie.presentation.view.boxoffice.viewholder.ErrorViewHolder
-import com.navermovie.presentation.view.boxoffice.viewholder.SkeletonViewHolder
+import com.navermovie.presentation.view.boxoffice.viewholder.BoxOfficeWeekViewHolder
+import com.navermovie.presentation.view.boxoffice.viewholder.WeekSkeletonViewHolder
 
-const val UN_FETCHED = 0
-const val FETCHED = 1
-const val ERROR = 2
-
-class BoxOfficeAdapter(
+class BoxOfficeWeekAdapter(
     private val itemClickListener: (Movie) -> Unit
-) : ListAdapter<Movie, RecyclerView.ViewHolder>(movieDiffUtil) {
+) : ListAdapter<Movie, RecyclerView.ViewHolder>(weeklyMovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             FETCHED -> {
-                BoxOfficeViewHolder(
+                BoxOfficeWeekViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_box_office_movie,
+                        R.layout.item_box_office_week,
                         parent,
                         false
-                    ),
-                    itemClickListener
-                )
-            }
-            UN_FETCHED -> {
-                SkeletonViewHolder(
-                    DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_box_office_skeleton,
-                        parent,
-                        false
-                    )
+                    ), itemClickListener
                 )
             }
             else -> {
-                ErrorViewHolder(
+                WeekSkeletonViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_box_office_error,
+                        R.layout.item_box_office_week_skeleton,
                         parent,
                         false
                     )
@@ -59,13 +42,9 @@ class BoxOfficeAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItem(position).isFetched) {
-            (holder as BoxOfficeViewHolder).bind(getItem(position))
+            (holder as BoxOfficeWeekViewHolder).bind(getItem(position))
         } else {
-            if (getItem(position).isError) {
-                (holder as ErrorViewHolder).bind()
-            } else {
-                (holder as SkeletonViewHolder).bind()
-            }
+            (holder as WeekSkeletonViewHolder).bind()
         }
     }
 
@@ -73,23 +52,17 @@ class BoxOfficeAdapter(
         return if (getItem(position).isFetched) {
             FETCHED
         } else {
-            if (getItem(position).isError) {
-                ERROR
-            } else {
-                UN_FETCHED
-            }
+            UN_FETCHED
         }
     }
 
     companion object {
-        private val movieDiffUtil = object : DiffUtil.ItemCallback<Movie>() {
+        private val weeklyMovieDiffUtil = object : DiffUtil.ItemCallback<Movie>() {
             override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
                 oldItem.movieCd == newItem.movieCd
 
             override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
                 oldItem == newItem
-
         }
     }
 }
-

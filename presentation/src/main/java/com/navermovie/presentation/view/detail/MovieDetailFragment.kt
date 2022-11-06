@@ -36,12 +36,6 @@ class MovieDetailFragment :
         DetailArticleAdapter(itemClickListener = { doOnClick(it) })
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedElementEnterTransition =
-            TransitionInflater.from(requireContext()).inflateTransition(R.transition.change_bounds)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initSelectedMovie()

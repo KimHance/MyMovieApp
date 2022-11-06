@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:background="@android:color/transparent">
+        android:layout_marginBottom="20dp">
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/sl_poster"
