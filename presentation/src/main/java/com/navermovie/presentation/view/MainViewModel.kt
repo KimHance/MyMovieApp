@@ -60,7 +60,6 @@ class MainViewModel @Inject constructor(
 
     @OptIn(FlowPreview::class)
     fun getDailyBoxOfficeList() {
-        val start = System.currentTimeMillis()
         val movieList = mutableListOf<Movie>()
         viewModelScope.launch {
             getDailyMovieListUseCase().flatMapMerge { unFetchedMovie ->
@@ -73,7 +72,6 @@ class MainViewModel @Inject constructor(
                 movieList.add(movie)
                 if (movieList.size == 10) {
                     _dailyBoxOfficeUiState.update { BoxOfficeUiState.Success(movieList) }
-                    Log.d("시간", "${System.currentTimeMillis() - start}")
                 }
             }
         }

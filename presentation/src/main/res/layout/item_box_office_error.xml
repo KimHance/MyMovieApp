@@ -9,22 +9,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="120dp"
         android:layout_height="240dp"
-        android:alpha="0.8"
-        android:background="@drawable/bg_item_skeleton">
-
-        <TextView
-            android:id="@+id/tv_no_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/no_image"
-            android:textColor="@color/detail_gray"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+        android:background="@drawable/ic_empty_image">
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
