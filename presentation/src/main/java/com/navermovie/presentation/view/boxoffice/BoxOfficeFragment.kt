@@ -2,6 +2,7 @@ package com.navermovie.presentation.view.boxoffice
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -21,12 +22,19 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragment_box_office) {
 
+    var waitTime = 0L
     private val mainViewModel: MainViewModel by activityViewModels()
     private val boxOfficeAdapter: BoxOfficeAdapter by lazy {
         BoxOfficeAdapter(itemClickListener = { movie ->
             doOnclick(movie)
         })
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
     private val boxOfficeWeekAdapter: BoxOfficeWeekAdapter by lazy {
         BoxOfficeWeekAdapter(itemClickListener = { movie ->
             doOnclick(movie)
@@ -78,7 +86,7 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                     }
                 }
                 launch {
-                    mainViewModel.weeklyBoxOfficeUiState.collect{ state ->
+                    mainViewModel.weeklyBoxOfficeUiState.collect { state ->
                         when (state) {
                             is BoxOfficeUiState.Success -> {
                                 boxOfficeWeekAdapter.submitList(state.data?.toList())
@@ -106,4 +114,17 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
         requireView().findNavController()
             .navigate(action)
     }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (System.currentTimeMillis() - waitTime >= 1500) {
+                waitTime = System.currentTimeMillis()
+                Snackbar.make(requireView(), getString(R.string.back_pressed_text), Snackbar.LENGTH_SHORT)
+                    .show()
+            } else {
+                requireActivity().finish()
+            }
+        }
+    }
+
 }

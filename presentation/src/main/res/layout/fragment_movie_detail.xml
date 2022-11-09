@@ -94,6 +94,7 @@
             android:layout_height="220dp"
             android:layout_marginTop="15dp"
             android:contentDescription="@null"
+            android:layout_marginStart="5dp"
             android:scaleType="fitXY"
             android:transitionName="@string/transition_poster"
             app:layout_constraintStart_toStartOf="parent"

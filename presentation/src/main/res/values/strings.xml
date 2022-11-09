@@ -22,4 +22,5 @@
     <string name="bookmark">bookmark</string>
     <string name="week">Week</string>
     <string name="box_office">Box Office</string>
+    <string name="back_pressed_text">뒤로가기 버튼을 한번 더 누르면 종료됩니다.</string>
 </resources>
