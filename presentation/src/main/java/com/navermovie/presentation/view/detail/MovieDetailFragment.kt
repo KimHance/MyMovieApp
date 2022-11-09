@@ -115,7 +115,7 @@ class MovieDetailFragment :
             val intent = Intent(Intent.ACTION_SEND).apply {
                 setType("text/html")
                 putExtra(
-                    Intent.EXTRA_TEXT, "${it?.title}(${it.openDate}개봉) \n\n" +
+                    Intent.EXTRA_TEXT, "${it.title}(${it.openDate}개봉) \n\n" +
                             "예매하기 \n" +
                             "CGV : $CGV_TICKETING \n\n" +
                             "롯데시네마 : $LOTTE_CINEMA_TICKETING \n\n" +
@@ -123,7 +123,7 @@ class MovieDetailFragment :
                 )
                 setPackage(KAKAO_TALK)
             }
-            startActivity(Intent.createChooser(intent, "${it?.title}"))
+            startActivity(Intent.createChooser(intent, "${it.title}"))
         }
     }
 

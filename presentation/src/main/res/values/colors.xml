@@ -15,4 +15,5 @@
     <color name="detail_rating">#F8C93C</color>
     <color name="color_detail_content">#10121B</color>
     <color name="box_office_text_background">#1A1A26</color>
+    <color name="et_select_color">#6317171B</color>
 </resources>

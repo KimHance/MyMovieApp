@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SearchEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textCursorDrawable">@color/detail_content</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/detail_content</item>
+        <item name="android:textColorHighlight">@color/et_select_color</item>
+        <item name="android:textSelectHandleLeft">@color/detail_content</item>
+        <item name="android:textSelectHandleRight">@color/detail_content</item>
+    </style>
+</resources>
