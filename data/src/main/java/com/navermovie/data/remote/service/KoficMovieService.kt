@@ -3,6 +3,7 @@ package com.navermovie.data.remote.service
 import com.navermovie.KOFIC_KEY
 import com.navermovie.data.remote.response.KoficBoxOfficeResult
 import com.navermovie.data.remote.response.KoficMovieInfoResult
+import com.navermovie.data.remote.response.SearchResponse
 import com.navermovie.getCurrentDate
 import com.navermovie.getLastWeek
 import retrofit2.http.GET
@@ -28,4 +29,12 @@ interface KoficMovieService {
         @Query("targetDt") date: String = getLastWeek(),
         @Query("weekGb") type: String = "0"
     ): KoficBoxOfficeResult
+
+    @GET("movie/searchMovieList.json")
+    suspend fun getSearchList(
+        @Query("movieNm") query: String,
+        @Query("key") key: String = KOFIC_KEY,
+        @Query("curPage") page: Int = 1,
+        @Query("itemPerPage") itemPerPage: String = "20"
+    ): SearchResponse
 }

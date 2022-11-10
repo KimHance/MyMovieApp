@@ -2,6 +2,7 @@ package com.navermovie.data.remote.datasource.impl
 
 import com.navermovie.data.remote.datasource.KoficMovieDataSource
 import com.navermovie.data.remote.response.BoxOffice
+import com.navermovie.data.remote.response.SearchResponse
 import com.navermovie.data.remote.service.KoficMovieService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,15 +12,18 @@ class KoficMovieDataSourceImpl @Inject constructor(
     private val movieService: KoficMovieService
 ) : KoficMovieDataSource {
 
-    override suspend fun getDailyBoxOfficeList(): Flow<List<BoxOffice>?> = flow {
+    override fun getDailyBoxOfficeList(): Flow<List<BoxOffice>?> = flow {
         emit(movieService.getDailyBoxOffice().boxOfficeResult?.dailyBoxOfficeList)
     }
 
-    override suspend fun getWeeklyBoxOfficeList(): Flow<List<BoxOffice>?> = flow {
+    override fun getWeeklyBoxOfficeList(): Flow<List<BoxOffice>?> = flow {
         emit(movieService.getWeeklyBoxOffice().boxOfficeResult?.weeklyBoxOfficeList)
     }
 
-    override suspend fun getMovieDetail(movieCd: String) = flow {
+    override fun getMovieDetail(movieCd: String) = flow {
         emit(movieService.getMovieDetail(movieCd))
     }
+
+    override suspend fun getSearchResponse(query: String): SearchResponse =
+        movieService.getSearchList(query)
 }
