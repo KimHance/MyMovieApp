@@ -13,5 +13,5 @@ interface KoficMovieDataSource {
 
     fun getMovieDetail(movieCd: String): Flow<KoficMovieInfoResult?>
 
-    suspend fun getSearchResponse(query: String): SearchResponse
+    fun getSearchResponse(query: String): Flow<SearchResponse>
 }

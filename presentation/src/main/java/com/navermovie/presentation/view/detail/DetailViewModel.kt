@@ -31,7 +31,7 @@ class DetailViewModel @Inject constructor(
     private val _articleList = MutableStateFlow<List<Article>?>(emptyList())
     val articleList = _articleList.asStateFlow()
 
-    private val _moviePlot = MutableStateFlow<String>("")
+    private val _moviePlot = MutableStateFlow("")
     val moviePlot = _moviePlot.asStateFlow()
 
 

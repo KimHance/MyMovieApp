@@ -2,10 +2,7 @@ package com.navermovie.data.repositoryimpl
 
 import com.navermovie.PLOT_ERROR
 import com.navermovie.data.remote.datasource.*
-import com.navermovie.data.remote.response.toActorString
-import com.navermovie.data.remote.response.toAuditString
-import com.navermovie.data.remote.response.toDirectorString
-import com.navermovie.data.remote.response.toGenreString
+import com.navermovie.data.remote.response.*
 import com.navermovie.entity.Actor
 import com.navermovie.entity.Article
 import com.navermovie.entity.Movie
@@ -182,4 +179,17 @@ class RemoteMovieRepositoryImpl @Inject constructor(
             )
         }
     }
+
+    override fun getSearchList(query: String) = flow {
+        koficMovieDataSource.getSearchResponse(query).collect { result ->
+            emit(
+                runCatching {
+                    result
+                }.mapCatching {
+                    it.movieListResult.movieList.toMovie()
+                }.getOrThrow()
+            )
+        }
+    }
+
 }

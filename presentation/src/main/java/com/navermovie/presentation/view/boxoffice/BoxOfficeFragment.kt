@@ -82,6 +82,9 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                                     )
                                     .show()
                             }
+                            is BoxOfficeUiState.Empty -> {
+                                boxOfficeAdapter.submitList(emptyList())
+                            }
                         }
                     }
                 }
@@ -99,6 +102,9 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                                     repeat(10) { add(Movie(isError = true)) }
                                 }.toList()
                                 boxOfficeWeekAdapter.submitList(errorList)
+                            }
+                            is BoxOfficeUiState.Empty -> {
+                                boxOfficeAdapter.submitList(emptyList())
                             }
                         }
                     }
@@ -119,7 +125,11 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
         override fun handleOnBackPressed() {
             if (System.currentTimeMillis() - waitTime >= 1500) {
                 waitTime = System.currentTimeMillis()
-                Snackbar.make(requireView(), getString(R.string.back_pressed_text), Snackbar.LENGTH_SHORT)
+                Snackbar.make(
+                    requireView(),
+                    getString(R.string.back_pressed_text),
+                    Snackbar.LENGTH_SHORT
+                )
                     .show()
             } else {
                 requireActivity().finish()

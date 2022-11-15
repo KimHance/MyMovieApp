@@ -17,6 +17,8 @@ const val KMDB_KEY = "YD696W32L73AA522H8UC"
 
 const val PLOT_ERROR = "줄거리를 받아올 수 없습니다"
 
+const val PAGE_SIZE = 30
+
 fun getCurrentDate(): String {
     return SimpleDateFormat("yyyyMMdd").format(System.currentTimeMillis() - 1000L * 60L * 60L * 24L)
         .toString()

@@ -1,6 +1,7 @@
 package com.navermovie.data.remote.service
 
 import com.navermovie.KOFIC_KEY
+import com.navermovie.PAGE_SIZE
 import com.navermovie.data.remote.response.KoficBoxOfficeResult
 import com.navermovie.data.remote.response.KoficMovieInfoResult
 import com.navermovie.data.remote.response.SearchResponse
@@ -32,9 +33,8 @@ interface KoficMovieService {
 
     @GET("movie/searchMovieList.json")
     suspend fun getSearchList(
-        @Query("movieNm") query: String,
+        @Query("movieNm") query: String = "",
+        @Query("itemPerPage") size: Int = PAGE_SIZE,
         @Query("key") key: String = KOFIC_KEY,
-        @Query("curPage") page: Int = 1,
-        @Query("itemPerPage") itemPerPage: String = "20"
     ): SearchResponse
 }

@@ -3,7 +3,6 @@ package com.navermovie.presentation.view.detail
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -11,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.navermovie.entity.Article
 import com.navermovie.presentation.*
 import com.navermovie.presentation.base.BaseFragment
@@ -74,11 +74,20 @@ class MovieDetailFragment :
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     detailViewModel.selectedMovieLinkId.collect { id ->
-                        requireActivity().startActivity(
-                            Intent(Intent.ACTION_VIEW)
-                                .setData(Uri.parse(YOUTUBE_WATCH_LINK + id))
-                                .setPackage(YOUTUBE)
-                        )
+                        if (id.isNotBlank()) {
+                            requireActivity().startActivity(
+                                Intent(Intent.ACTION_VIEW)
+                                    .setData(Uri.parse(YOUTUBE_WATCH_LINK + id))
+                                    .setPackage(YOUTUBE)
+                            )
+                        } else {
+                            Snackbar.make(
+                                requireView(),
+                                getString(R.string.teaser_error),
+                                Snackbar.LENGTH_SHORT
+                            )
+                                .show()
+                        }
                     }
                 }
                 launch {

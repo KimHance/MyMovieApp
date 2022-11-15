@@ -21,4 +21,6 @@ interface RemoteMovieRepository {
     fun getMovieArticle(movie: Movie): Flow<List<Article>?>
 
     fun getMoviePlot(movie: Movie): Flow<String>
+
+    fun getSearchList(query: String): Flow<List<Movie>>
 }
