@@ -43,15 +43,16 @@ class MainViewModel @Inject constructor(
     fun getWeeklyBoxOfficeList() {
         val movieList = mutableListOf<Movie>()
         viewModelScope.launch {
-            getWeeklyMovieListUseCase().flatMapConcat { unFetchedMovie ->
+            getWeeklyMovieListUseCase().flatMapMerge { unFetchedMovie ->
                 fetchMovieDetailUseCase(unFetchedMovie)
-            }.flatMapConcat { detailFetchedMovie ->
+            }.flatMapMerge { detailFetchedMovie ->
                 fetchMoviePosterUseCase(detailFetchedMovie)
             }.catch {
                 _weeklyBoxOfficeUiState.value = BoxOfficeUiState.Error
             }.collect { movie ->
                 movieList.add(movie)
                 if (movieList.size == 10) {
+                    movieList.sortBy { it.rank }
                     _weeklyBoxOfficeUiState.update { BoxOfficeUiState.Success(movieList) }
                 }
             }
