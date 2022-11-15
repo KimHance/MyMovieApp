@@ -32,4 +32,5 @@ ext {
     room_version = "2.4.3"
     carouselr_version = "1.2.5"
     gson_version = "2.9.0"
+    lottie_version = "5.2.0"
 }
