@@ -55,6 +55,8 @@
                     android:autofillHints="no"
                     android:background="@android:color/transparent"
                     android:hint="@string/title_input_text"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/iv_title_search"

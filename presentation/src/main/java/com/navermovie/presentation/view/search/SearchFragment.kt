@@ -1,6 +1,7 @@
 package com.navermovie.presentation.view.search
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -35,6 +36,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     private fun initView() {
         binding.apply {
             rvSearch.adapter = searchAdapter
+            etSearchTitle.setOnKeyListener { _, keyCode, event ->
+                if ((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    if (etSearchTitle.text.isNotBlank()) {
+                        searchViewModel.getSearchList(etSearchTitle.text.toString())
+                    }
+                    true
+                } else {
+                    false
+                }
+            }
             ivTitleSearch.setOnClickListener {
                 if (etSearchTitle.text.isNotBlank()) {
                     searchViewModel.getSearchList(etSearchTitle.text.toString())
