@@ -1,9 +1,11 @@
 package com.navermovie.data.repositoryimpl
 
 import com.navermovie.PLOT_ERROR
+import com.navermovie.data.local.dao.BookmarkDao
 import com.navermovie.data.local.dao.CachedActorDao
 import com.navermovie.data.local.dao.CachedArticleDao
 import com.navermovie.data.local.dao.CachedStoryDao
+import com.navermovie.data.local.datasource.BookmarkDataSource
 import com.navermovie.data.local.datasource.CachedDataSource
 import com.navermovie.data.local.dto.CachedActorImageEntity
 import com.navermovie.data.local.dto.CachedArticleEntity
@@ -19,15 +21,17 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
+    private val bookmarkDataSource: BookmarkDataSource,
     private val cachedDataSource: CachedDataSource,
     private val naverSearchDataSource: NaverSearchDataSource,
     private val kakaoSearchDataSource: KakaoSearchDataSource,
     private val kmdbSearchDataSource: KmdbSearchDataSource,
     private val cachedActorDao: CachedActorDao,
     private val cachedArticleDao: CachedArticleDao,
-    private val cachedStoryDao: CachedStoryDao
+    private val cachedStoryDao: CachedStoryDao,
+    private val bookmarkDao: BookmarkDao
 ) : MovieRepository {
-    override suspend fun getActorImageList(code: String): Flow<Pair<List<Actor>?, Boolean>> = flow {
+    override fun getActorImageList(code: String): Flow<Pair<List<Actor>?, Boolean>> = flow {
         if (cachedActorDao.isActorExists(code)) {
             cachedDataSource.getActorList(code).collect { cachedData ->
                 emit(Pair(cachedData.actorList, true))
@@ -37,7 +41,7 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getArticleList(code: String): Flow<Pair<List<Article>?, Boolean>> = flow {
+    override fun getArticleList(code: String): Flow<Pair<List<Article>?, Boolean>> = flow {
         if (cachedArticleDao.isArticleExists(code)) {
             cachedDataSource.getArticleList(code).collect { cachedData ->
                 emit(Pair(cachedData.articleList, true))
@@ -47,7 +51,7 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMovieStory(code: String): Flow<Pair<String, Boolean>> = flow {
+    override fun getMovieStory(code: String): Flow<Pair<String, Boolean>> = flow {
         if (cachedStoryDao.isPlotExists(code)) {
             cachedDataSource.getMovieStory(code).collect { cachedData ->
                 emit(Pair(cachedData.movieStory, true))

@@ -1,6 +1,5 @@
 package com.navermovie.presentation.view.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.navermovie.entity.Movie

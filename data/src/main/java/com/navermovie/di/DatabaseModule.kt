@@ -1,6 +1,7 @@
 package com.navermovie.di
 
 import android.content.Context
+import com.navermovie.data.local.database.BookmarkDatabase
 import com.navermovie.data.local.database.CachedActorDatabase
 import com.navermovie.data.local.database.CachedArticleDatabase
 import com.navermovie.data.local.database.CachedStoryDatabase
@@ -29,6 +30,10 @@ object DatabaseModule {
 
     @Provides
     @Singleton
+    fun provideBookmarkDao(database: BookmarkDatabase) = database.BookmarkDao()
+
+    @Provides
+    @Singleton
     fun provideCachedActorDatabase(
         @ApplicationContext context: Context
     ): CachedActorDatabase = CachedActorDatabase.getInstance(context)
@@ -45,4 +50,9 @@ object DatabaseModule {
         @ApplicationContext context: Context
     ): CachedStoryDatabase = CachedStoryDatabase.getInstance(context)
 
+    @Provides
+    @Singleton
+    fun provideBookmarkDatabase(
+        @ApplicationContext context: Context
+    ): BookmarkDatabase = BookmarkDatabase.getInstance(context)
 }

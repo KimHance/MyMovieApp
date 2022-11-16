@@ -1,6 +1,8 @@
 package com.navermovie.di
 
+import com.navermovie.data.local.datasource.BookmarkDataSource
 import com.navermovie.data.local.datasource.CachedDataSource
+import com.navermovie.data.local.datasource.impl.BookmarkDataSourceImpl
 import com.navermovie.data.local.datasource.impl.CachedDataSourceImpl
 import com.navermovie.data.remote.datasource.*
 import com.navermovie.data.remote.datasource.impl.*
@@ -53,6 +55,12 @@ abstract class DataModule {
     abstract fun bindCachedDataSource(
         impl: CachedDataSourceImpl
     ): CachedDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindBookmarkDataSource(
+        impl: BookmarkDataSourceImpl
+    ): BookmarkDataSource
 
     @Binds
     @Singleton

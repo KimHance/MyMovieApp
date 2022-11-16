@@ -25,9 +25,9 @@
     </fragment>
     <fragment
         android:id="@+id/bookMarkFragment"
-        android:name="com.navermovie.presentation.view.bookmark.BookMarkFragment"
+        android:name="com.navermovie.presentation.view.bookmark.BookmarkFragment"
         android:label="BookMarkFragment"
-        tools:layout="@layout/fragment_book_mark">
+        tools:layout="@layout/fragment_bookmark">
         <action
             android:id="@+id/action_bookMarkFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />

@@ -1,9 +1,7 @@
 package com.navermovie.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import com.navermovie.data.local.dto.BookmarkedMovie
 import com.navermovie.data.local.dto.CachedActorImageEntity
 import com.navermovie.data.local.dto.CachedArticleEntity
 import com.navermovie.data.local.dto.CachedStoryEntity
@@ -49,4 +47,20 @@ interface CachedStoryDao {
 
     @Query("SELECT EXISTS(SELECT * FROM CACHED_MOVIE_STORY WHERE movieCode =:code)")
     fun isPlotExists(code: String): Boolean
+}
+
+@Dao
+interface BookmarkDao {
+
+    @Query("SELECT * FROM BOOKMARKED_MOVIE")
+    fun getAll(): Flow<List<BookmarkedMovie>>
+
+    @Query("SELECT * FROM BOOKMARKED_MOVIE where title like :query ")
+    fun getSearchList(query: String): Flow<List<BookmarkedMovie>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveMovie(bookmarkedMovie: BookmarkedMovie)
+
+    @Delete
+    suspend fun deleteMovie(bookmarkedMovie: BookmarkedMovie)
 }
