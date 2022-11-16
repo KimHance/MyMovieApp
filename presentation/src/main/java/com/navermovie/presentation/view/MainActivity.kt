@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.navermovie.presentation.R
@@ -47,7 +48,14 @@ class MainActivity : AppCompatActivity() {
                         navController.navigate(R.id.searchFragment)
                     }
                     R.id.boxOfficeFragment -> {
-                        navController.navigate(R.id.boxOfficeFragment)
+                        navController.navigate(
+                            R.id.boxOfficeFragment,
+                            null,
+                            NavOptions.Builder()
+                                .setLaunchSingleTop(true)
+                                .setPopUpTo(R.id.boxOfficeFragment, false)
+                                .build()
+                        )
                     }
                     R.id.bookMarkFragment -> {
                         navController.navigate(R.id.bookMarkFragment)
