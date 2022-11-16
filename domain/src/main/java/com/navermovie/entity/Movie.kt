@@ -21,6 +21,6 @@ data class Movie(
 ) : Serializable
 
 data class Directors(
-    val name: String = "",
+    val name: String? = "",
     val englishName: String = ""
 )

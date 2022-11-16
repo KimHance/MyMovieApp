@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.navermovie.entity.Actor
 import com.navermovie.entity.Article
 import com.navermovie.entity.Movie
+import com.navermovie.presentation.PLOT_ERROR
 import com.navermovie.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -93,7 +94,7 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             getMoviePlotUseCase(movie).collect { data ->
                 _moviePlot.value = data.first
-                if (!data.second) {
+                if ((!data.second) and (data.first != PLOT_ERROR)) {
                     saveMovieStoryUseCase(movie.movieCd, data.first, date)
                 }
             }

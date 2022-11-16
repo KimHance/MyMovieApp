@@ -97,14 +97,8 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                             is BoxOfficeUiState.Loading -> {
                                 boxOfficeWeekAdapter.submitList(state.data.toList())
                             }
-                            is BoxOfficeUiState.Error -> {
-                                val errorList = mutableListOf<Movie>().apply {
-                                    repeat(10) { add(Movie(isError = true)) }
-                                }.toList()
-                                boxOfficeWeekAdapter.submitList(errorList)
-                            }
-                            is BoxOfficeUiState.Empty -> {
-                                boxOfficeAdapter.submitList(emptyList())
+                            else -> {
+                                boxOfficeWeekAdapter.submitList(emptyList())
                             }
                         }
                     }

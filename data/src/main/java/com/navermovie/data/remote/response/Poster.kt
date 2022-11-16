@@ -9,8 +9,9 @@ data class PosterResult(
 
 @Serializable
 data class Item(
+    val title: String,
     val image: String,
     val userRating: String,
     val director: String,
-    val pubDate: String
+    val pubDate: String,
 )

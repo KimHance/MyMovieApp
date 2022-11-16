@@ -1,5 +1,7 @@
 package com.navermovie.data.repositoryimpl
 
+import androidx.core.text.HtmlCompat
+import com.navermovie.EMPTY_VALUE
 import com.navermovie.PLOT_ERROR
 import com.navermovie.data.remote.datasource.*
 import com.navermovie.data.remote.response.*
@@ -83,26 +85,23 @@ class RemoteMovieRepositoryImpl @Inject constructor(
     }
 
     override fun fetchMoviePoster(movie: Movie) = flow {
-        val director = movie.directors?.first()?.name
-        val prodYear = movie.prodYear
+        val prodYear = movie.prodYear ?: EMPTY_VALUE
         var isPosterFetched = false
-        naverSearchDataSource.getMoviePoster(movie.title).collect { result ->
+        val movieTitle = movie.title.replace(" ", "")
+        naverSearchDataSource.getMoviePoster(movie.title).collect { response ->
             runCatching {
-                result
-            }.onSuccess {
-                it?.items?.forEach { item ->
-                    val token = item?.director?.split("|")
-                    token?.forEach { name ->
-                        if ((name == director) and (item.pubDate == prodYear)) {
-                            val fetchedMovie = movie.copy(
-                                poster = item.image,
-                                rating = item.userRating,
-                                isFetched = true
-                            )
+                response
+            }.onSuccess { result ->
+                result?.items?.forEach { item ->
+                    item?.let {
+                        val title = HtmlCompat.fromHtml(it.title, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                            .toString().replace(" ", "")
+                        if ((movieTitle == title) and (item.pubDate == prodYear)) {
+                            addPoster(movie, item)
                             isPosterFetched = true
-                            emit(fetchedMovie)
                         }
                     }
+
                 }
                 if (!isPosterFetched) {
                     emit(movie.copy(isFetched = true))
@@ -111,6 +110,18 @@ class RemoteMovieRepositoryImpl @Inject constructor(
                 throw error
             }
         }
+    }
+
+    private suspend fun FlowCollector<Movie>.addPoster(
+        movie: Movie,
+        item: Item
+    ) {
+        val fetchedMovie = movie.copy(
+            poster = item.image,
+            rating = item.userRating,
+            isFetched = true
+        )
+        emit(fetchedMovie)
     }
 
     override fun getMovieTeaser(query: String) = flow {
@@ -159,8 +170,8 @@ class RemoteMovieRepositoryImpl @Inject constructor(
     }
 
     override fun getMoviePlot(movie: Movie) = flow {
-        val director = movie.directors?.first()?.name
-        val englishName = movie.directors?.first()?.englishName
+        val director = movie.directors?.first()?.name ?: EMPTY_VALUE
+        val englishName = movie.directors?.first()?.englishName ?: EMPTY_VALUE
         kmdbSearchDataSource.getMoviePlot(movie.title).collect { result ->
             emit(
                 runCatching {
@@ -181,12 +192,14 @@ class RemoteMovieRepositoryImpl @Inject constructor(
     }
 
     override fun getSearchList(query: String) = flow {
-        koficMovieDataSource.getSearchResponse(query).collect { result ->
+        koficMovieDataSource.getSearchResponse(query).collect { response ->
             emit(
                 runCatching {
-                    result
-                }.mapCatching {
-                    it.movieListResult.movieList.toMovie()
+                    response
+                }.mapCatching { result ->
+                    result.movieListResult.movieList.filter {
+                        it.prdtStatNm == "개봉"
+                    }.toMovie()
                 }.getOrThrow()
             )
         }

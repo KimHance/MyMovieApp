@@ -67,8 +67,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                                 searchAdapter.submitList(state.data?.toList())
                             }
                             is BoxOfficeUiState.Loading -> {
-                                searchAdapter.submitList(state.data.toList())
-                                searchViewModel.fetchList()
+                                if (state.data.isNotEmpty()) {
+                                    searchAdapter.submitList(state.data.toList())
+                                    searchViewModel.fetchList()
+                                }
                             }
                             is BoxOfficeUiState.Error -> {
                                 Snackbar.make(
@@ -80,6 +82,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                             }
                             is BoxOfficeUiState.Empty -> {
                                 searchAdapter.submitList(emptyList())
+                                Snackbar.make(
+                                    requireView(),
+                                    getString(R.string.empty_search),
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }

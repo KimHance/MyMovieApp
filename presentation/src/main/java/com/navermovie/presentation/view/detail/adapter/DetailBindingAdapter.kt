@@ -11,20 +11,27 @@ import java.text.SimpleDateFormat
 
 @BindingAdapter("bindDate")
 fun TextView.bindDate(date: String) {
-    val year = date.subSequence(0, 4)
-    text = year
+    text = if(date.isBlank()){
+        context.getString(R.string.not_know)
+    }else{
+        date.subSequence(0, 4)
+    }
 }
 
 @BindingAdapter("bindShowTime")
 fun TextView.bindShowTime(time: String) {
-    val hours = time.toInt() / 60
-    val minutes = time.toInt() % 60
-    text = "${hours}h ${minutes}m"
+    text = if (time.isBlank()) {
+        ""
+    } else {
+        val hours = time.toInt() / 60
+        val minutes = time.toInt() % 60
+        "${hours}h ${minutes}m"
+    }
 }
 
 @BindingAdapter("bindRating")
 fun TextView.bindRating(rating: String) {
-    text = if (rating.isNullOrBlank()) {
+    text = if (rating.isBlank()) {
         "0.0"
     } else {
         rating
@@ -33,9 +40,13 @@ fun TextView.bindRating(rating: String) {
 
 @BindingAdapter("bindOpenDate")
 fun TextView.bindOpenDate(date: String) {
-    val dateFormatter = SimpleDateFormat("yyyyMMdd")
-    val date = dateFormatter.parse(date)
-    text = SimpleDateFormat(context.getString(R.string.open_data_format)).format(date)
+    text = if (date.isBlank()) {
+        ""
+    } else {
+        val dateFormatter = SimpleDateFormat("yyyyMMdd")
+        val date = dateFormatter.parse(date)
+        SimpleDateFormat(context.getString(R.string.open_data_format)).format(date)
+    }
 }
 
 @BindingAdapter("bindImage")

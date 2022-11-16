@@ -1,5 +1,6 @@
 package com.navermovie.presentation.view.search
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.navermovie.entity.Movie
@@ -20,7 +21,8 @@ class SearchViewModel @Inject constructor(
     private val fetchMoviePosterUseCase: FetchMoviePosterUseCase
 ) : ViewModel() {
 
-    private val _searchList = MutableStateFlow<BoxOfficeUiState>(BoxOfficeUiState.Empty)
+    private val _searchList =
+        MutableStateFlow<BoxOfficeUiState>(BoxOfficeUiState.Loading(emptyList()))
     val searchList = _searchList.asStateFlow()
 
     var isSearchLoading = MutableStateFlow(false)
@@ -32,9 +34,13 @@ class SearchViewModel @Inject constructor(
                 _searchList.value = BoxOfficeUiState.Error
                 isSearchLoading.value = false
             }.collect { unfetchedList ->
+                isSearchLoading.value = false
                 _searchList.update {
-                    isSearchLoading.value = false
-                    BoxOfficeUiState.Loading(unfetchedList)
+                    if (unfetchedList.isEmpty()) {
+                        BoxOfficeUiState.Empty(query)
+                    } else {
+                        BoxOfficeUiState.Loading(unfetchedList)
+                    }
                 }
             }
         }
@@ -45,8 +51,10 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             val unfetchedList = _searchList.value as BoxOfficeUiState.Loading
             val fetchedMovieList = mutableListOf<Movie>()
-            unfetchedList.data.forEach { unfetchedMovie ->
-                fetchMovieDetailUseCase(unfetchedMovie).flatMapMerge { detailFetchedMovie ->
+            unfetchedList.data.onEach { unfetchedMovie ->
+                fetchMovieDetailUseCase(unfetchedMovie).catch {
+                    _searchList.value = BoxOfficeUiState.Error
+                }.flatMapMerge { detailFetchedMovie ->
                     fetchMoviePosterUseCase(detailFetchedMovie)
                 }.catch {
                     _searchList.value = BoxOfficeUiState.Error
