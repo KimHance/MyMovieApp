@@ -68,10 +68,12 @@ dependencies {
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
-    // CarouselRecyclerview
+    // About View
     implementation "com.github.sparrow007:carouselrecyclerview:$carouselr_version"
 
     implementation "com.facebook.shimmer:shimmer:0.5.0"
+
+    implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:1.1.1'
 
     implementation "com.airbnb.android:lottie:$lottie_version"
 }
