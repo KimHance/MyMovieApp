@@ -13,11 +13,14 @@ import com.navermovie.data.local.dto.CachedStoryEntity
 import com.navermovie.data.remote.datasource.KakaoSearchDataSource
 import com.navermovie.data.remote.datasource.KmdbSearchDataSource
 import com.navermovie.data.remote.datasource.NaverSearchDataSource
+import com.navermovie.di.DispatcherModule
 import com.navermovie.entity.Actor
 import com.navermovie.entity.Article
 import com.navermovie.repository.MovieRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -29,7 +32,8 @@ class MovieRepositoryImpl @Inject constructor(
     private val cachedActorDao: CachedActorDao,
     private val cachedArticleDao: CachedArticleDao,
     private val cachedStoryDao: CachedStoryDao,
-    private val bookmarkDao: BookmarkDao
+    private val bookmarkDao: BookmarkDao,
+    @DispatcherModule.DispatcherIO private val dispatcherIO: CoroutineDispatcher
 ) : MovieRepository {
     override fun getActorImageList(code: String): Flow<Pair<List<Actor>?, Boolean>> = flow {
         if (cachedActorDao.isActorExists(code)) {
@@ -39,7 +43,7 @@ class MovieRepositoryImpl @Inject constructor(
         } else {
             emit(Pair(null, false))
         }
-    }
+    }.flowOn(dispatcherIO)
 
     override fun getArticleList(code: String): Flow<Pair<List<Article>?, Boolean>> = flow {
         if (cachedArticleDao.isArticleExists(code)) {
@@ -49,7 +53,7 @@ class MovieRepositoryImpl @Inject constructor(
         } else {
             emit(Pair(null, false))
         }
-    }
+    }.flowOn(dispatcherIO)
 
     override fun getMovieStory(code: String): Flow<Pair<String, Boolean>> = flow {
         if (cachedStoryDao.isPlotExists(code)) {
@@ -59,7 +63,7 @@ class MovieRepositoryImpl @Inject constructor(
         } else {
             emit(Pair(PLOT_ERROR, false))
         }
-    }
+    }.flowOn(dispatcherIO)
 
     override suspend fun deleteCachedData(date: Long) {
         cachedActorDao.deleteCachedActor(date)

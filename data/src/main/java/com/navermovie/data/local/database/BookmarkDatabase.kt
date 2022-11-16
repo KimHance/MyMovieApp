@@ -26,6 +26,8 @@ abstract class BookmarkDatabase : RoomDatabase() {
     companion object {
         fun getInstance(context: Context): BookmarkDatabase = Room
             .databaseBuilder(context, BookmarkDatabase::class.java, "bookmark.db")
+            .addTypeConverter(DirectorTypeConverter())
+            .addTypeConverter(StringTypeConverter())
             .build()
     }
 }
