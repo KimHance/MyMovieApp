@@ -7,6 +7,7 @@
 - `MVVM` `Clean Architecture` `Multi Module`
 - `databinding`
 - `Coroutine` `Flow`
+- `Retrofit2` `OkHttp3`
 - `Hilt`
 - `Room`
 - `Navigtaion`
