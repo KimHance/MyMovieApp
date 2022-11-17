@@ -10,6 +10,10 @@
             type="com.navermovie.entity.Movie" />
 
         <variable
+            name="bookmark"
+            type="Boolean" />
+
+        <variable
             name="plot"
             type="String" />
     </data>
@@ -32,14 +36,15 @@
 
         <ImageView
             android:id="@+id/iv_detail_book_mark"
+            bindBookmark="@{bookmark}"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:contentDescription="@null"
-            android:src="@drawable/ic_book_mark_off"
             app:layout_constraintEnd_toStartOf="@id/iv_ticket"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_book_mark_on" />
 
         <ImageView
             android:id="@+id/iv_detail_back"
@@ -74,9 +79,9 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="40dp"
+            android:autoSizeTextType="uniform"
             android:gravity="start"
             android:maxLines="2"
-            android:autoSizeTextType="uniform"
             android:text="@{movie.title}"
             android:textColor="@color/white"
             android:textSize="28sp"
@@ -93,9 +98,9 @@
             bindPoster="@{movie.poster}"
             android:layout_width="170dp"
             android:layout_height="220dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="15dp"
             android:contentDescription="@null"
-            android:layout_marginStart="5dp"
             android:scaleType="fitXY"
             android:transitionName="@string/transition_poster"
             app:layout_constraintStart_toStartOf="parent"

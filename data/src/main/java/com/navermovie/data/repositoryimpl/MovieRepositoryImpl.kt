@@ -7,15 +7,11 @@ import com.navermovie.data.local.dao.CachedArticleDao
 import com.navermovie.data.local.dao.CachedStoryDao
 import com.navermovie.data.local.datasource.BookmarkDataSource
 import com.navermovie.data.local.datasource.CachedDataSource
-import com.navermovie.data.local.dto.CachedActorImageEntity
-import com.navermovie.data.local.dto.CachedArticleEntity
-import com.navermovie.data.local.dto.CachedStoryEntity
-import com.navermovie.data.remote.datasource.KakaoSearchDataSource
-import com.navermovie.data.remote.datasource.KmdbSearchDataSource
-import com.navermovie.data.remote.datasource.NaverSearchDataSource
+import com.navermovie.data.local.dto.*
 import com.navermovie.di.DispatcherModule
 import com.navermovie.entity.Actor
 import com.navermovie.entity.Article
+import com.navermovie.entity.Movie
 import com.navermovie.repository.MovieRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -26,9 +22,6 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val bookmarkDataSource: BookmarkDataSource,
     private val cachedDataSource: CachedDataSource,
-    private val naverSearchDataSource: NaverSearchDataSource,
-    private val kakaoSearchDataSource: KakaoSearchDataSource,
-    private val kmdbSearchDataSource: KmdbSearchDataSource,
     private val cachedActorDao: CachedActorDao,
     private val cachedArticleDao: CachedArticleDao,
     private val cachedStoryDao: CachedStoryDao,
@@ -65,6 +58,19 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }.flowOn(dispatcherIO)
 
+    override fun getAllBookmarkedMovieList(): Flow<List<Movie>> = flow {
+        bookmarkDao.getAll().collect { list ->
+            emit(list.toMovieList())
+        }
+    }.flowOn(dispatcherIO)
+
+    override fun getSearchBookmarkedMovieList(query: String): Flow<List<Movie>> = flow {
+        val searchQuery = "%$query%"
+        bookmarkDao.getSearchList(searchQuery).collect { list ->
+            emit(list.toMovieList())
+        }
+    }.flowOn(dispatcherIO)
+
     override suspend fun deleteCachedData(date: Long) {
         cachedActorDao.deleteCachedActor(date)
         cachedArticleDao.deleteCachedArticle(date)
@@ -85,4 +91,19 @@ class MovieRepositoryImpl @Inject constructor(
         cachedStoryDao.saveMovieStory(entity)
     }
 
+    override suspend fun saveBookmarkMovie(movie: Movie) {
+        val bookmarkMovie = movie.toBookmark()
+        bookmarkDao.saveMovie(bookmarkMovie)
+    }
+
+    override suspend fun deleteBookmark(movie: Movie) {
+        val bookmarkMovie = movie.toBookmark()
+        bookmarkDao.deleteMovie(bookmarkMovie)
+    }
+
+    override fun checkBookmarkMovie(movie: Movie): Flow<Boolean> = flow {
+        bookmarkDao.isMovieExists(movie.movieCd).collect {
+            emit(it)
+        }
+    }
 }

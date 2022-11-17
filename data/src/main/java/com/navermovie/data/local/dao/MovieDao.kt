@@ -52,6 +52,9 @@ interface CachedStoryDao {
 @Dao
 interface BookmarkDao {
 
+    @Query("SELECT EXISTS(SELECT * FROM BOOKMARKED_MOVIE WHERE movieCd =:code)")
+    fun isMovieExists(code: String): Flow<Boolean>
+
     @Query("SELECT * FROM BOOKMARKED_MOVIE")
     fun getAll(): Flow<List<BookmarkedMovie>>
 

@@ -20,7 +20,10 @@ class DetailViewModel @Inject constructor(
     private val getMoviePlotUseCase: GetMoviePlotUseCase,
     private val saveActorListUseCase: SaveActorListUseCase,
     private val saveArticleListUseCase: SaveArticleListUseCase,
-    private val saveMovieStoryUseCase: SaveMovieStoryUseCase
+    private val saveMovieStoryUseCase: SaveMovieStoryUseCase,
+    private val saveMovieUseCase: SaveMovieUseCase,
+    private val deleteMovieUseCase: DeleteMovieUseCase,
+    private val checkMovieSavedUseCase: CheckMovieSavedUseCase
 ) : ViewModel() {
 
     private val _selectedMovieLinkId = MutableSharedFlow<String>()
@@ -35,6 +38,8 @@ class DetailViewModel @Inject constructor(
     private val _moviePlot = MutableStateFlow("")
     val moviePlot = _moviePlot.asStateFlow()
 
+    private val _isMovieSaved = MutableStateFlow(false)
+    val isMovieSaved = _isMovieSaved.asStateFlow()
 
     fun setYoutubeVideoId(title: String) {
         viewModelScope.launch {
@@ -97,6 +102,33 @@ class DetailViewModel @Inject constructor(
                 if ((!data.second) and (data.first != PLOT_ERROR)) {
                     saveMovieStoryUseCase(movie.movieCd, data.first, date)
                 }
+            }
+        }
+    }
+
+    fun selectModeBySavedState(movie: Movie) {
+        if (_isMovieSaved.value) deleteMovie(movie)
+        else saveMovie(movie)
+    }
+
+    private fun saveMovie(movie: Movie) {
+        viewModelScope.launch {
+            saveMovieUseCase(movie)
+            _isMovieSaved.value = true
+        }
+    }
+
+    private fun deleteMovie(movie: Movie) {
+        viewModelScope.launch {
+            deleteMovieUseCase(movie)
+            _isMovieSaved.value = false
+        }
+    }
+
+    fun checkMovieSaved(movie: Movie) {
+        viewModelScope.launch {
+            checkMovieSavedUseCase(movie).collect {
+                _isMovieSaved.value = it
             }
         }
     }

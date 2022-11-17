@@ -75,3 +75,12 @@ fun TextView.bindHtml(html: String?) {
         text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 }
+
+@BindingAdapter("bindBookmark")
+fun ImageView.bindBookmark(state: Boolean){
+    if (state){
+        setImageResource(R.drawable.ic_book_mark_on)
+    }else{
+        setImageResource(R.drawable.ic_book_mark_off)
+    }
+}

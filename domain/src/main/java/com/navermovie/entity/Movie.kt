@@ -18,7 +18,6 @@ data class Movie(
     val rating: String? = "",
     val isFetched: Boolean = false,
     val isError: Boolean = false,
-    val isBookmarked: Boolean = false
 ) : Serializable
 
 data class Directors(

@@ -66,6 +66,9 @@ class MovieDetailFragment :
                     "ticketing_bottom_sheet"
                 )
             }
+            ivDetailBookMark.setOnClickListener {
+                detailViewModel.selectModeBySavedState(navArgs.movie)
+            }
         }
     }
 
@@ -105,6 +108,11 @@ class MovieDetailFragment :
                         binding.plot = plot
                     }
                 }
+                launch {
+                    detailViewModel.isMovieSaved.collect { state ->
+                        binding.bookmark = state
+                    }
+                }
             }
         }
     }
@@ -113,6 +121,7 @@ class MovieDetailFragment :
         binding.movie = navArgs.movie
         val currentTime = System.currentTimeMillis()
         detailViewModel.apply {
+            detailViewModel.checkMovieSaved(navArgs.movie)
             getActorImageList(navArgs.movie, currentTime)
             getMovieArticle(navArgs.movie, currentTime)
             getMoviePlot(navArgs.movie, currentTime)

@@ -28,29 +28,29 @@ data class BookmarkedMovie(
     val showTime: String? = "",
     val poster: String? = "",
     val rating: String? = "",
-) {
-    fun toMovie(): Movie {
-        return Movie(
-            title,
-            rank,
-            rankType,
-            movieCd,
-            openDate,
-            prodYear,
-            actors,
-            genres,
-            audits,
-            directors,
-            showTime,
-            poster,
-            rating,
-            isFetched = true,
-            isBookmarked = true,
+)
+fun List<BookmarkedMovie>.toMovieList(): List<Movie> {
+    return this.map {
+        Movie(
+            it.title,
+            it.rank,
+            it.rankType,
+            it.movieCd,
+            it.openDate,
+            it.prodYear,
+            it.actors,
+            it.genres,
+            it.audits,
+            it.directors,
+            it.showTime,
+            it.poster,
+            it.rating,
+            isFetched = true
         )
     }
 }
 
-fun Movie.bookmark(): BookmarkedMovie {
+fun Movie.toBookmark(): BookmarkedMovie {
     return BookmarkedMovie(
         movieCd,
         title,
