@@ -5,7 +5,7 @@
 ## Tech🛠️
 - `Kotlin`
 - `MVVM` `Clean Architecture` `Multi Module`
-- 'databinding'
+- `databinding`
 - `Coroutine` `Flow`
 - `Hilt`
 - `Room`
