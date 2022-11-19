@@ -35,9 +35,7 @@ class RemoteMovieRepositoryImpl @Inject constructor(
                         )
                     )
                 }
-            }.onFailure { error ->
-                throw error
-            }
+            }.getOrThrow()
         }
     }
 
@@ -56,9 +54,7 @@ class RemoteMovieRepositoryImpl @Inject constructor(
                         )
                     )
                 }
-            }.onFailure { error ->
-                throw error
-            }
+            }.getOrThrow()
         }
     }
 
@@ -106,8 +102,8 @@ class RemoteMovieRepositoryImpl @Inject constructor(
                 if (!isPosterFetched) {
                     emit(movie.copy(isFetched = true))
                 }
-            }.onFailure { error ->
-                throw error
+            }.onFailure {
+                emit(movie.copy(isFetched = true))
             }
         }
     }

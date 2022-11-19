@@ -43,17 +43,16 @@ class MainViewModel @Inject constructor(
     fun getWeeklyBoxOfficeList() {
         val movieList = mutableListOf<Movie>()
         viewModelScope.launch {
-            getWeeklyMovieListUseCase().flatMapMerge { unFetchedMovie ->
-                fetchMovieDetailUseCase(unFetchedMovie)
-            }.flatMapMerge { detailFetchedMovie ->
-                fetchMoviePosterUseCase(detailFetchedMovie)
-            }.catch {
-                _weeklyBoxOfficeUiState.value = BoxOfficeUiState.Error
-            }.collect { movie ->
-                movieList.add(movie)
-                if (movieList.size == 10) {
-                    movieList.sortBy { it.rank }
-                    _weeklyBoxOfficeUiState.update { BoxOfficeUiState.Success(movieList) }
+            getWeeklyMovieListUseCase().collect { unFetchedMovie ->
+                fetchMovieDetailUseCase(unFetchedMovie).flatMapMerge { detailFetchedMovie ->
+                    fetchMoviePosterUseCase(detailFetchedMovie)
+                }.catch {
+                    _weeklyBoxOfficeUiState.value = BoxOfficeUiState.Error
+                }.collect { movie ->
+                    movieList.add(movie)
+                    if (movieList.size == 10) {
+                        _weeklyBoxOfficeUiState.update { BoxOfficeUiState.Success(movieList) }
+                    }
                 }
             }
         }
@@ -63,16 +62,16 @@ class MainViewModel @Inject constructor(
     fun getDailyBoxOfficeList() {
         val movieList = mutableListOf<Movie>()
         viewModelScope.launch {
-            getDailyMovieListUseCase().flatMapMerge { unFetchedMovie ->
-                fetchMovieDetailUseCase(unFetchedMovie)
-            }.flatMapMerge { detailFetchedMovie ->
-                fetchMoviePosterUseCase(detailFetchedMovie)
-            }.catch {
-                _dailyBoxOfficeUiState.value = BoxOfficeUiState.Error
-            }.collect { movie ->
-                movieList.add(movie)
-                if (movieList.size == 10) {
-                    _dailyBoxOfficeUiState.update { BoxOfficeUiState.Success(movieList) }
+            getDailyMovieListUseCase().collect { unFetchedMovie ->
+                fetchMovieDetailUseCase(unFetchedMovie).flatMapMerge { detailFetchedMovie ->
+                    fetchMoviePosterUseCase(detailFetchedMovie)
+                }.catch {
+                    _dailyBoxOfficeUiState.value = BoxOfficeUiState.Error
+                }.collect { movie ->
+                    movieList.add(movie)
+                    if (movieList.size == 10) {
+                        _dailyBoxOfficeUiState.update { BoxOfficeUiState.Success(movieList) }
+                    }
                 }
             }
         }

@@ -74,13 +74,7 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                                     repeat(10) { add(Movie(isError = true)) }
                                 }.toList()
                                 boxOfficeAdapter.submitList(errorList)
-                                Snackbar
-                                    .make(
-                                        requireView(),
-                                        getString(R.string.failed_to_get_movie),
-                                        Snackbar.LENGTH_SHORT
-                                    )
-                                    .show()
+                                showError()
                             }
                             is BoxOfficeUiState.Empty -> {
                                 boxOfficeAdapter.submitList(emptyList())
@@ -99,12 +93,23 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                             }
                             else -> {
                                 boxOfficeWeekAdapter.submitList(emptyList())
+                                showError()
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun showError() {
+        Snackbar
+            .make(
+                requireView(),
+                getString(R.string.failed_to_get_movie),
+                Snackbar.LENGTH_SHORT
+            )
+            .show()
     }
 
     private fun doOnclick(movie: Movie) {
