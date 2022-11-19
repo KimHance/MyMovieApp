@@ -24,7 +24,10 @@
 <img src="https://user-images.githubusercontent.com/86879099/202859903-f7d1b095-8d75-4125-923e-d009279a244d.gif" width="220" height="440"/>
 
 - 북마크  
-<img src="https://user-images.githubusercontent.com/86879099/202859906-eb09b18e-ef31-45e0-8511-67ae3176c887.gif" width="220" height="440"/>  
+<img src="https://user-images.githubusercontent.com/86879099/202859906-eb09b18e-ef31-45e0-8511-67ae3176c887.gif" width="220" height="440"/>
+
+- 인터넷 끊김 및 다시 받아오기
+<img src="https://user-images.githubusercontent.com/86879099/202862916-a7d7cce5-865d-49c7-8b37-ecb7a968325d.gif" width="220" height="440"/>
 
 
 ## Feat🎈
