@@ -166,8 +166,12 @@ class RemoteMovieRepositoryImpl @Inject constructor(
     }
 
     override fun getMoviePlot(movie: Movie) = flow {
-        val director = movie.directors?.first()?.name ?: EMPTY_VALUE
-        val englishName = movie.directors?.first()?.englishName ?: EMPTY_VALUE
+        var director = ""
+        var englishName = ""
+        if (movie.directors.isNotEmpty()) {
+            director = movie.directors.first().name ?: EMPTY_VALUE
+            englishName = movie.directors.first().englishName ?: EMPTY_VALUE
+        }
         kmdbSearchDataSource.getMoviePlot(movie.title).collect { result ->
             emit(
                 runCatching {

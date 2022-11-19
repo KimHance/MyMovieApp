@@ -41,7 +41,7 @@ fun List<BookmarkedMovie>.toMovieList(): List<Movie> {
             it.actors,
             it.genres,
             it.audits,
-            it.directors,
+            it.directors!!,
             it.showTime,
             it.poster,
             it.rating,

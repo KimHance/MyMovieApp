@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="skeleton_background">#2B2D3C</color>
+    <color name="skeleton_background">#E41D1F2A</color>
     <color name="main">#060709</color>
     <color name="secondary">#FFA001</color>
     <color name="detail_content">#17171B</color>

@@ -12,7 +12,7 @@ data class Movie(
     val actors: List<String>? = emptyList(),
     val genres: List<String>? = emptyList(),
     val audits: List<String>? = emptyList(),
-    val directors: List<Directors>? = emptyList(),
+    val directors: List<Directors> = emptyList(),
     val showTime: String? = "",
     val poster: String? = "",
     val rating: String? = "",

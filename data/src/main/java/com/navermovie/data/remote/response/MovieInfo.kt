@@ -57,14 +57,14 @@ fun List<Audit?>?.toAuditString(): List<String>? {
     }
 }
 
-fun List<Director?>?.toDirectorString(): List<Directors>? {
+fun List<Director?>?.toDirectorString(): List<Directors> {
     return this?.map {
         Directors(
             name = it?.peopleNm.toString(),
             englishName = it?.peopleNmEn.toString()
         )
 
-    }
+    }!!
 }
 
 fun List<Genre?>?.toGenreString(): List<String>? {
