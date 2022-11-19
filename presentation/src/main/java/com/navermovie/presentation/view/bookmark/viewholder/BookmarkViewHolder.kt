@@ -1,11 +1,11 @@
-package com.navermovie.presentation.view.boxoffice.viewholder
+package com.navermovie.presentation.view.bookmark.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.navermovie.entity.Movie
-import com.navermovie.presentation.databinding.ItemBoxOfficeMovieBinding
+import com.navermovie.presentation.databinding.ItemBookMarkMovieBinding
 
-class BoxOfficeViewHolder(
-    private val binding: ItemBoxOfficeMovieBinding,
+class BookmarkViewHolder(
+    private val binding: ItemBookMarkMovieBinding,
     private val itemClickListener: (Movie) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 

@@ -58,7 +58,13 @@ class MainActivity : AppCompatActivity() {
                         )
                     }
                     R.id.bookMarkFragment -> {
-                        navController.navigate(R.id.bookMarkFragment)
+                        navController.navigate(
+                            R.id.bookMarkFragment,
+                            null,
+                            NavOptions.Builder()
+                                .setLaunchSingleTop(true)
+                                .build()
+                        )
                     }
                 }
                 true
