@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">영화 볼까나</string>
+    <string name="app_name">무비 차차</string>
     <string name="trending_upper">Trending</string>
     <string name="rating">Rating</string>
     <string name="open_data_format">MM월 dd일 개봉</string>
