@@ -3,6 +3,7 @@ package com.navermovie.presentation.view.boxoffice
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isGone
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +14,7 @@ import com.navermovie.entity.Movie
 import com.navermovie.presentation.R
 import com.navermovie.presentation.base.BaseFragment
 import com.navermovie.presentation.databinding.FragmentBoxOfficeBinding
+import com.navermovie.presentation.utils.NetworkManager
 import com.navermovie.presentation.view.MainViewModel
 import com.navermovie.presentation.view.boxoffice.adapter.BoxOfficeAdapter
 import com.navermovie.presentation.view.boxoffice.adapter.BoxOfficeWeekAdapter
@@ -45,6 +47,26 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         collectMovieList()
+        initView()
+    }
+
+    private fun initView() {
+        binding.apply {
+            cvDailyRefetch.setOnClickListener {
+                if (!NetworkManager.checkNetworkState(requireContext())){
+                    showNetworkError()
+                }else{
+                    mainViewModel.getDailyBoxOfficeList()
+                }
+            }
+            cvWeeklyRefetch.setOnClickListener {
+                if (!NetworkManager.checkNetworkState(requireContext())){
+                    showNetworkError()
+                }else{
+                    mainViewModel.getWeeklyBoxOfficeList()
+                }
+            }
+        }
     }
 
     private fun initRecyclerView() {
@@ -64,12 +86,15 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                     mainViewModel.dailyBoxOfficeUiState.collect { state ->
                         when (state) {
                             is BoxOfficeUiState.Success -> {
+                                showDailyRefetchButton(true)
                                 boxOfficeAdapter.submitList(state.data?.toList())
                             }
                             is BoxOfficeUiState.Loading -> {
+                                showDailyRefetchButton(true)
                                 boxOfficeAdapter.submitList(state.data.toList())
                             }
                             else -> {
+                                showDailyRefetchButton(false)
                                 boxOfficeAdapter.submitList(emptyList())
                                 showError()
                             }
@@ -80,12 +105,15 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                     mainViewModel.weeklyBoxOfficeUiState.collect { state ->
                         when (state) {
                             is BoxOfficeUiState.Success -> {
+                                showWeeklyRefetchButton(true)
                                 boxOfficeWeekAdapter.submitList(state.data?.toList())
                             }
                             is BoxOfficeUiState.Loading -> {
+                                showWeeklyRefetchButton(true)
                                 boxOfficeWeekAdapter.submitList(state.data.toList())
                             }
                             else -> {
+                                showWeeklyRefetchButton(false)
                                 boxOfficeWeekAdapter.submitList(emptyList())
                                 showError()
                             }
@@ -94,6 +122,14 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                 }
             }
         }
+    }
+
+    private fun showDailyRefetchButton(state: Boolean) {
+        binding.cvDailyRefetch.isGone = state
+    }
+
+    private fun showWeeklyRefetchButton(state: Boolean) {
+        binding.cvWeeklyRefetch.isGone = state
     }
 
     private fun showError() {
@@ -105,6 +141,17 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
             )
             .show()
     }
+
+    private fun showNetworkError() {
+        Snackbar
+            .make(
+                requireView(),
+                getString(R.string.network_error),
+                Snackbar.LENGTH_SHORT
+            )
+            .show()
+    }
+
 
     private fun doOnclick(movie: Movie) {
         val action = BoxOfficeFragmentDirections.actionBoxOfficeFragmentToMovieDetailFragment(

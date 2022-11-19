@@ -1,6 +1,5 @@
 package com.navermovie.presentation.view
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.navermovie.entity.Movie
@@ -26,11 +25,11 @@ class MainViewModel @Inject constructor(
     }.toList()
 
     private val _dailyBoxOfficeUiState =
-        MutableStateFlow<BoxOfficeUiState>(BoxOfficeUiState.Loading(emptyMovieList))
+        MutableStateFlow<BoxOfficeUiState>(BoxOfficeUiState.Loading(emptyList()))
     val dailyBoxOfficeUiState = _dailyBoxOfficeUiState.asStateFlow()
 
     private val _weeklyBoxOfficeUiState =
-        MutableStateFlow<BoxOfficeUiState>(BoxOfficeUiState.Loading(emptyMovieList))
+        MutableStateFlow<BoxOfficeUiState>(BoxOfficeUiState.Loading(emptyList()))
     val weeklyBoxOfficeUiState = _weeklyBoxOfficeUiState.asStateFlow()
 
     fun deleteCachedData(date: Long) {
@@ -41,6 +40,7 @@ class MainViewModel @Inject constructor(
 
     @OptIn(FlowPreview::class)
     fun getWeeklyBoxOfficeList() {
+        _weeklyBoxOfficeUiState.value = BoxOfficeUiState.Loading(emptyMovieList)
         val movieList = mutableListOf<Movie>()
         viewModelScope.launch {
             getWeeklyMovieListUseCase().collect { unFetchedMovie ->
@@ -60,6 +60,7 @@ class MainViewModel @Inject constructor(
 
     @OptIn(FlowPreview::class)
     fun getDailyBoxOfficeList() {
+        _dailyBoxOfficeUiState.value = BoxOfficeUiState.Loading(emptyMovieList)
         val movieList = mutableListOf<Movie>()
         viewModelScope.launch {
             getDailyMovieListUseCase().collect { unFetchedMovie ->
@@ -75,5 +76,10 @@ class MainViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setNetworkError() {
+        _dailyBoxOfficeUiState.value = BoxOfficeUiState.Error
+        _weeklyBoxOfficeUiState.value = BoxOfficeUiState.Error
     }
 }

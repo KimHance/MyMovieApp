@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.navermovie.presentation.R
 import com.navermovie.presentation.databinding.ActivityMainBinding
+import com.navermovie.presentation.utils.NetworkManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,8 +32,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        viewModel.getDailyBoxOfficeList()
-        viewModel.getWeeklyBoxOfficeList()
+        if (!NetworkManager.checkNetworkState(this)) {
+            viewModel.setNetworkError()
+        } else {
+            viewModel.getDailyBoxOfficeList()
+            viewModel.getWeeklyBoxOfficeList()
+        }
         viewModel.deleteCachedData(System.currentTimeMillis())
     }
 
