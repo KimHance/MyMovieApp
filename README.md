@@ -1,4 +1,4 @@
-## 박스오피스와 검색 및 저장이 가능한 영화🍿 (진행중)
+## 박스오피스와 검색 및 저장이 가능한 영화앱🍿
 
 #### 영화진흥위원회 오픈API를 이용한 영화앱입니다.
 
@@ -14,9 +14,18 @@
 - `Glide` `BindingAdapter`
 
 ## About Service📱
-<img src="https://user-images.githubusercontent.com/86879099/202497257-6b0dc448-1e2f-4f9b-a487-561390dd826e.gif" width="220" height="440"/>
-<img src="https://user-images.githubusercontent.com/86879099/202497825-576a402c-d2c6-44e9-b535-935d3fbe98e1.gif" width="220" height="440"/>
-<img src="https://user-images.githubusercontent.com/86879099/202497834-ea53e7b7-5d75-47b3-a6c9-d3e9a032e798.gif" width="220" height="440"/>
+- 메인  
+<img src="https://user-images.githubusercontent.com/86879099/202859892-3eebd2fc-c2a2-4de1-b44f-9d9cc9d98c6c.gif" width="220" height="440"/>
+
+- 디테일  
+<img src="https://user-images.githubusercontent.com/86879099/202859897-4584c90a-e170-442f-a782-f86a0599d69d.gif" width="220" height="440"/> 
+
+- 검색  
+<img src="https://user-images.githubusercontent.com/86879099/202859903-f7d1b095-8d75-4125-923e-d009279a244d.gif" width="220" height="440"/>
+
+- 북마크  
+<img src="https://user-images.githubusercontent.com/86879099/202859906-eb09b18e-ef31-45e0-8511-67ae3176c887.gif" width="220" height="440"/>  
+
 
 ## Feat🎈
 #### 영화 받아오기
@@ -42,25 +51,15 @@
 - kobis영화 검색 api
 - api 일일 한도를 고려하여 debounce 적용x -> 최대 20개까지만 반영
 
-#### 북마크(진행중)
-- Room 사용
-- dragdropswiperecyclerview 사용
-- debounce 적용하여 검색
+#### 북마크
+- Room 사용하여 저장
+- 검색에 debounce 적용
 
 #### 그 외
 - 카카오톡 예매링크 공유
 - 3사 영화홈페이지 예메화면 바로가기
 - 유튜브 티저영상 이동
 
-<img src="https://user-images.githubusercontent.com/86879099/202504663-7f99f6d7-fbcd-4482-9e81-002f8a0268ff.jpg" width="180" height="360"/>  <img src="https://user-images.githubusercontent.com/86879099/202504654-b5f710fe-2d2a-44c8-9923-38ec0919fd36.jpg" width="180" height="360"/>  <img src="https://user-images.githubusercontent.com/86879099/202505180-e8c1754a-2370-4f96-aeb9-fd1356accd76.jpg" width="180" height="360"/>
-
-## Todo❗
-- 북마크 뷰 마무리
-- Collapsing Toolbar 적용하기
-- dragdropswiperecyclerview의 swipe를 이용한 북마크 영화 삭제
-- UI 다듬기
-- 코드 개선
-- 각종 버그 잡기
-
+<img src="https://user-images.githubusercontent.com/86879099/202860136-692a7921-83e3-4139-9a51-1e12369f83f2.gif" width="180" height="360"/>  <img src="https://user-images.githubusercontent.com/86879099/202860140-eb8217dc-92da-4573-a2ff-5c4546cdcef2.gif" width="180" height="360"/>  <img src="https://user-images.githubusercontent.com/86879099/202860141-ffa004ee-c001-4e8a-875e-a1f2724f1007.gif" width="180" height="360"/>
 
 
