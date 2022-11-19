@@ -65,9 +65,6 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
-    // Paging
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
-
     // About View
     implementation "com.github.sparrow007:carouselrecyclerview:$carouselr_version"
 

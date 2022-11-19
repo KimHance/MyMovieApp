@@ -23,7 +23,6 @@ ext {
     hilt_version = "2.42"
     retrofit_version = "2.9.0"
     okhttp_version = "5.0.0-alpha.7"
-    paging_version = "3.2.0-alpha03"
     glide_version = "4.13.2"
     kotlin_version = "1.6.21"
     nav_version = "2.5.1"

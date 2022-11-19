@@ -1,6 +1,5 @@
 package com.navermovie.presentation.view.search.adapter
 
-import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView

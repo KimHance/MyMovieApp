@@ -3,7 +3,6 @@ package com.navermovie.presentation.view.search.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +12,6 @@ import com.navermovie.presentation.view.boxoffice.adapter.FETCHED
 import com.navermovie.presentation.view.boxoffice.adapter.UN_FETCHED
 import com.navermovie.presentation.view.boxoffice.viewholder.BoxOfficeWeekViewHolder
 import com.navermovie.presentation.view.boxoffice.viewholder.WeekSkeletonViewHolder
-import com.navermovie.presentation.view.detail.viewholder.ArticleSkeletonVieHolder
-import com.navermovie.presentation.view.detail.viewholder.ArticleViewHolder
 
 class SearchAdapter(
     private val itemClickListener: (Movie) -> Unit
