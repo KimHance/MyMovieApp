@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name">MovieApp</string>
+    <string name="app_name">영화 볼까나</string>
     <string name="trending_upper">Trending</string>
     <string name="rating">Rating</string>
     <string name="open_data_format">MM월 dd일 개봉</string>
     <string name="watch_teaser">Watch Teaser</string>
     <string name="transition_poster">movie_poster</string>
-    <string name="story">줄거리</string>
-    <string name="actors">캐스팅</string>
-    <string name="directors">감독</string>
-    <string name="article">관련 기사</string>
-    <string name="ticketing">예매하기</string>
+    <string name="story">Plot</string>
+    <string name="actors">Casting</string>
+    <string name="directors">Directors</string>
+    <string name="article">Articles</string>
+    <string name="ticketing">Ticketing</string>
     <string name="lotte_cinema">롯데시네마</string>
     <string name="cgv">CGV</string>
     <string name="mega_box">메가박스</string>
@@ -31,4 +31,5 @@
     <string name="empty_search">검색 결과가 존재하지 않습니다(Kobis 기준)</string>
     <string name="not_know">알 수 없음</string>
     <string name="book_mark">Bookmark</string>
+    <string name="share">share</string>
 </resources>

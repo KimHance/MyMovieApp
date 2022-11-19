@@ -42,7 +42,7 @@
             android:layout_marginTop="15dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/detail_gray"
+            android:textColor="@color/main_gray"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

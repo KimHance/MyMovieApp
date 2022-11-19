@@ -18,7 +18,7 @@
         android:id="@+id/bottom_nav_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_main"
+        android:background="@color/main"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:itemIconTint="@color/white"

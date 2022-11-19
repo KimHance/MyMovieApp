@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:textColor="@color/detail_gray"
+            android:textColor="@color/main_gray"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/cv_detail_rating"
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
-            android:backgroundTint="#424662"
+            android:backgroundTint="@color/secondary"
             app:cardCornerRadius="7dp"
             app:layout_constraintBottom_toBottomOf="@id/iv_box_office_week_poster"
             app:layout_constraintStart_toStartOf="@id/iv_box_office_week_poster">

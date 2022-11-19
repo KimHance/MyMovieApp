@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:padding="6dp"
             android:text="@{genre}"
-            android:textColor="@color/detail_genre"
+            android:textColor="@color/secondary_alpha"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"

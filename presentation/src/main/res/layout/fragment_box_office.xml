@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_main">
+        android:background="@color/main">
 
         <TextView
             android:id="@+id/tv_trending"
@@ -32,7 +32,8 @@
             android:layout_marginStart="7dp"
             android:layout_marginTop="10dp"
             android:text="@string/trending_lower"
-            android:textColor="@color/box_office_text_background"
+            android:textColor="@color/secondary"
+            android:alpha="0.1"
             android:textSize="68sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +65,8 @@
             android:layout_marginStart="7dp"
             android:layout_marginTop="10dp"
             android:text="@string/box_office"
-            android:textColor="@color/box_office_text_background"
+            android:textColor="@color/secondary"
+            android:alpha="0.1"
             android:textSize="68sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
