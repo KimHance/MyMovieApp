@@ -96,7 +96,11 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                             else -> {
                                 showDailyRefetchButton(false)
                                 boxOfficeAdapter.submitList(emptyList())
-                                showError()
+                                if (!NetworkManager.checkNetworkState(requireContext())){
+                                    showNetworkError()
+                                }else{
+                                    showError()
+                                }
                             }
                         }
                     }
@@ -115,7 +119,11 @@ class BoxOfficeFragment : BaseFragment<FragmentBoxOfficeBinding>(R.layout.fragme
                             else -> {
                                 showWeeklyRefetchButton(false)
                                 boxOfficeWeekAdapter.submitList(emptyList())
-                                showError()
+                                if (!NetworkManager.checkNetworkState(requireContext())){
+                                    showNetworkError()
+                                }else{
+                                    showError()
+                                }
                             }
                         }
                     }
