@@ -7,7 +7,7 @@
 
         <variable
             name="actor"
-            type="com.navermovie.entity.Actor" />
+            type="com.moviechacha.entity.Actor" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

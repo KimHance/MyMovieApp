@@ -9,12 +9,20 @@ plugins {
 }
 
 android {
-    namespace = "com.navermovie.movieapp"
+    signingConfigs {
+        release {
+            storeFile file(var)
+            storePassword '123456789'
+            keyAlias 'key_movei_chacha'
+            keyPassword '123456789'
+        }
+    }
+    namespace = "com.moviechacha.movieapp"
 
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.movieapp"
+        applicationId "com.moviechacha.movieapp"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -27,6 +35,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

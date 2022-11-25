@@ -32,4 +32,5 @@ ext {
     carouselr_version = "1.2.5"
     gson_version = "2.9.0"
     lottie_version = "5.2.0"
+    var = 'C:\\Users\\rldkv\\Desktop\\key store\\moviechacha_key.jks'
 }
