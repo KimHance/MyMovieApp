@@ -35,6 +35,9 @@ class MovieDetailFragment :
     private val articleAdapter: DetailArticleAdapter by lazy {
         DetailArticleAdapter(itemClickListener = { doOnClick(it) })
     }
+    private val plotDialog : PlotDialog by lazy{
+        PlotDialog.newInstance(detailViewModel.moviePlot.value)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,6 +72,9 @@ class MovieDetailFragment :
             ivDetailBookMark.setOnClickListener {
                 detailViewModel.selectModeBySavedState(navArgs.movie)
                 showBookmarkMessage()
+            }
+            tvDetailStoryContent.setOnClickListener {
+                plotDialog.show(requireActivity().supportFragmentManager,"plotDialog")
             }
         }
     }
@@ -148,9 +154,17 @@ class MovieDetailFragment :
 
     private fun showBookmarkMessage() {
         if (!detailViewModel.isMovieSaved.value) {
-            Snackbar.make(requireView(), getString(R.string.bookmark_on_message), Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                requireView(),
+                getString(R.string.bookmark_on_message),
+                Snackbar.LENGTH_SHORT
+            ).show()
         } else {
-            Snackbar.make(requireView(), getString(R.string.bookmark_off_message), Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                requireView(),
+                getString(R.string.bookmark_off_message),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
 
     }
