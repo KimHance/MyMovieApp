@@ -44,7 +44,6 @@
             android:layout_height="0dp"
             android:layout_marginHorizontal="3dp"
             android:layout_marginTop="5dp"
-            android:autoSizeTextType="uniform"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="2"
@@ -55,6 +54,6 @@
             app:layout_constraintEnd_toEndOf="@id/divider"
             app:layout_constraintStart_toStartOf="@id/divider"
             app:layout_constraintTop_toBottomOf="@id/divider"
-            tools:text="드웨인 존슨" />
+            tools:text="빅토리아 시크릿" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
