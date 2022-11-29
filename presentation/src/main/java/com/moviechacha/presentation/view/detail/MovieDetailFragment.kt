@@ -68,6 +68,7 @@ class MovieDetailFragment :
             }
             ivDetailBookMark.setOnClickListener {
                 detailViewModel.selectModeBySavedState(navArgs.movie)
+                showBookmarkMessage()
             }
         }
     }
@@ -143,6 +144,15 @@ class MovieDetailFragment :
             }
             startActivity(Intent.createChooser(intent, "${it.title}"))
         }
+    }
+
+    private fun showBookmarkMessage() {
+        if (!detailViewModel.isMovieSaved.value) {
+            Snackbar.make(requireView(), getString(R.string.bookmark_on_message), Snackbar.LENGTH_SHORT).show()
+        } else {
+            Snackbar.make(requireView(), getString(R.string.bookmark_off_message), Snackbar.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun doOnClick(item: Article) {

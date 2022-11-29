@@ -33,4 +33,6 @@
     <string name="book_mark">Bookmark</string>
     <string name="share">share</string>
     <string name="network_error">인터넷 연결을 확인해주세요.</string>
+    <string name="bookmark_on_message">북마크 설정됨</string>
+    <string name="bookmark_off_message">북마크 해재됨</string>
 </resources>
