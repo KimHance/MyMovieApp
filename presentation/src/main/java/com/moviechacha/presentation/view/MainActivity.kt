@@ -29,6 +29,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initData()
         initNavigation()
+        hideActionBar()
+    }
+
+    private fun hideActionBar() {
+        val actionBar = supportActionBar?.hide()
     }
 
     private fun initData() {
